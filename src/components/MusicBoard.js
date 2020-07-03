@@ -2,10 +2,10 @@ import React from "react";
 import { Grid, Button } from "@material-ui/core";
 import Tone from "tone";
 import GridButton from "./GridButton";
+import TempoSlider from "./TempoSlider";
 
 const synth = new Tone.AMSynth();
 const audioStyles = { width: "100%", height: "30px" };
-
 const audioCtx = Tone.context;
 const dest = audioCtx.createMediaStreamDestination();
 const recorder = new MediaRecorder(dest.stream);
@@ -82,6 +82,10 @@ class MusicBoard extends React.Component {
     };
   };
 
+  changeTempo = (val) => {
+    Tone.Transport.bpm.value = val;
+  };
+
   handleClick = (row, col) => {
     let gridC = [...this.state.gridColours];
     let currentColour = gridC[row][col];
@@ -139,6 +143,9 @@ class MusicBoard extends React.Component {
         <Button onClick={() => this.stopEntireBeat(synthPart)}>
           Stop Recording
         </Button>
+        <div align="center">
+          <TempoSlider value={Tone.Transport.bpm.value} handleChange={(val) => this.changeTempo(val)}/>
+        </div>
         <div>
           <audio controls style={audioStyles} src={this.state.src}></audio>
         </div>
