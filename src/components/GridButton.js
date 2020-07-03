@@ -5,7 +5,7 @@ export class GridButton extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      color: "grey",
+      color: "default",
       clicked: false,
     };
   }
