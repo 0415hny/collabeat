@@ -1,10 +1,9 @@
 import React from 'react';
-
 import { Button } from '@material-ui/core';
 // import './App.css';
 
 
-class App extends React.Component {
+class Home extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -24,4 +23,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default Home;
