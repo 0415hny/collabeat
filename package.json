@@ -13,6 +13,7 @@
     "react-scripts": "3.4.1",
     "react-share": "^4.2.0",
     "reactjs-popup": "^1.5.0",
+    "tone": "^13.8.25",
     "typescript": "^3.9.6"
   },
   "scripts": {
