@@ -1,7 +1,9 @@
 import React from "react";
-import { Button } from "@material-ui/core";
+import { Button, Container } from "@material-ui/core";
 import Chat from "../components/Chat";
 import Popup from "reactjs-popup";
+import MusicBoard from "../components/MusicBoard";
+import Tone from "tone";
 
 // import './styles.css';
 
@@ -26,19 +28,33 @@ class Music extends React.Component {
   constructor(props) {
     super(props);
   }
+  playSound = () => {
+    const synth = new Tone.MembraneSynth().toMaster();
+
+    const loop = new Tone.Loop(function (time) {
+      //triggered every eighth note.
+      synth.triggerAttackRelease("C2", "2n");
+    }, "2n").start(0);
+
+    Tone.Transport.start();
+  };
   render() {
     return (
       <div className="App">
         <Button onClick={() => this.props.history.push("/")}>
           Go back to home
         </Button>
-        <p>
-          Welcome to music page.
-          <div>Music board goes here</div>
-          <div>Select from sounds/beats</div>
-          <Button>Download Music</Button>
-        </p>
+
+        <p>Welcome to music page.</p>
+
+        <Container>
+          <MusicBoard />
+        </Container>
+
+        <Button>Download Music</Button>
+
         <Chat />
+
         <Popup
           trigger={
             <button size="lg" className="button">
