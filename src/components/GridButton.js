@@ -10,7 +10,7 @@ export class GridButton extends React.Component {
     };
   }
 
-  handleClick = () => {
+  handleClick = (e) => {
     let isOn = this.state.clicked;
     if (!isOn) {
       // play sound
@@ -24,6 +24,7 @@ export class GridButton extends React.Component {
         color: "grey",
         clicked: !this.state.clicked,
       });
+      this.props.updatedNotesArray();
     }
   };
   render() {
@@ -32,7 +33,7 @@ export class GridButton extends React.Component {
         variant="contained"
         color={this.state.color}
         disabled={this.state.disabled}
-        onClick={() => this.handleClick()}
+        onClick={this.handleClick}
         style={{
           padding: "10px",
         }}

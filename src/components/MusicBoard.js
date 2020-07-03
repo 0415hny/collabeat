@@ -24,14 +24,21 @@ class MusicBoard extends React.Component {
     };
 
     let newNote = rowToNote[row];
-    let notes = this.state.notes;
+    let notes = [...this.state.notes];
     notes[col] = newNote;
     console.log(col, { notes });
-
+    this.setState({
+      notes: notes,
+    });
     console.log(row, rowToNote[row]);
     synth.triggerAttackRelease(newNote, "8n");
 
     console.log(this.state.notes);
+  };
+
+  updateNotesFromChildHandler = (index) => {
+    let newNotes = [...this.state.notes];
+    newNotes.splice(index, 1);
   };
 
   playEntireBeat = () => {
@@ -64,7 +71,12 @@ class MusicBoard extends React.Component {
           {this.state.rows.map((row, i) => {
             return (
               <Grid item key={i}>
-                <GridButton playSound={() => this.playSound(row, col)} />
+                <GridButton
+                  updatedNotesArray={() =>
+                    this.updateNotesFromChildHandler(col)
+                  }
+                  playSound={() => this.playSound(row, col)}
+                />
               </Grid>
             );
           })}
