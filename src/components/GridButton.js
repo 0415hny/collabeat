@@ -10,7 +10,7 @@ export class GridButton extends React.Component {
     };
   }
 
-  handleClick = (e) => {
+  handleClick = () => {
     let isOn = this.state.clicked;
     if (!isOn) {
       // play sound

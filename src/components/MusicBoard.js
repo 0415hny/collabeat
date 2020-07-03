@@ -24,12 +24,8 @@ class MusicBoard extends React.Component {
     };
 
     let newNote = rowToNote[row];
-    let notes = [...this.state.notes];
+    let notes = this.state.notes;
     notes[col] = newNote;
-    console.log(col, { notes });
-    this.setState({
-      notes: notes,
-    });
     console.log(row, rowToNote[row]);
     synth.triggerAttackRelease(newNote, "8n");
 
@@ -37,8 +33,9 @@ class MusicBoard extends React.Component {
   };
 
   updateNotesFromChildHandler = (index) => {
-    let newNotes = [...this.state.notes];
-    newNotes.splice(index, 1);
+    let newNotes = this.state.notes;
+    newNotes[index] = null;
+    console.log(this.state.notes);
   };
 
   playEntireBeat = () => {
