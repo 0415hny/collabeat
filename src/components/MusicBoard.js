@@ -3,7 +3,13 @@ import { Grid, Button } from "@material-ui/core";
 import Tone from "tone";
 import GridButton from "./GridButton";
 
-const synth = new Tone.AMSynth().toMaster();
+const synth = new Tone.AMSynth();
+const audioStyles = { width: "100%", height: "30px" };
+
+const audioCtx = Tone.context;
+const dest = audioCtx.createMediaStreamDestination();
+const recorder = new MediaRecorder(dest.stream);
+synth.connect(dest);
 
 class MusicBoard extends React.Component {
   constructor(props) {
@@ -13,6 +19,7 @@ class MusicBoard extends React.Component {
       cols: fill(16),
       notes: fillNotes(16),
       gridColours: createGridColourMatrix(4, 16),
+      src: null,
     };
   }
   playSound = (row, col) => {
@@ -30,7 +37,7 @@ class MusicBoard extends React.Component {
       notes: notes,
     });
     console.log(row, rowToNote[row]);
-    synth.triggerAttackRelease(newNote, "8n");
+    synth.toMaster().triggerAttackRelease(newNote, "8n");
 
     console.log(this.state.notes);
   };
@@ -54,12 +61,25 @@ class MusicBoard extends React.Component {
     // you can specify when the synth part starts
     // e.g. .start('8n') will start after 1 eighth note
     // start the transport which controls the main timeline
+    recorder.start();
+
     Tone.Transport.start();
   };
 
   stopEntireBeat = (part) => {
+    recorder.stop();
     part.stop();
     Tone.Transport.stop();
+
+    let data = [];
+
+    recorder.ondataavailable = (e) => data.push(e.data);
+    recorder.onstop = (e) => {
+      let blob = new Blob(data, { type: "audio/ogg; codecs=opus" });
+      this.setState({
+        src: URL.createObjectURL(blob),
+      });
+    };
   };
 
   handleClick = (row, col) => {
@@ -99,7 +119,7 @@ class MusicBoard extends React.Component {
     };
     let synthPart = new Tone.Sequence(
       function (time, note) {
-        synth.triggerAttackRelease(note, "10hz", time);
+        synth.toMaster().triggerAttackRelease(note, "10hz", time);
       },
       this.state.notes,
       "4n"
@@ -115,18 +135,13 @@ class MusicBoard extends React.Component {
             );
           })}
         </Grid>
-        <Button onClick={() => this.playEntireBeat(synthPart)}>Play</Button>
-        <Button onClick={() => this.stopEntireBeat(synthPart)}>Stop</Button>
-        <Button
-          onClick={() => {
-            var synth = new Tone.PolySynth().toMaster();
-            synth.set("detune", -1200);
-            synth.triggerAttackRelease(["A1", "D2"], "4n");
-            Tone.Transport.start();
-          }}
-        >
-          Test
+        <Button onClick={() => this.playEntireBeat(synthPart)}>Record</Button>
+        <Button onClick={() => this.stopEntireBeat(synthPart)}>
+          Stop Recording
         </Button>
+        <div>
+          <audio controls style={audioStyles} src={this.state.src}></audio>
+        </div>
       </div>
     );
   }
