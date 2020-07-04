@@ -13,10 +13,9 @@ class Home extends React.Component {
       <div className="App">
         <header className="App-header">
           <p>
-            This is homepage
-            Welcome to collabeatbeatbeat
+            Welcome to Collabeat!
           </p>
-          <Button onClick={() => this.props.history.push('/music')}>go to music page</Button>
+          <Button color="secondary" variant="outlined" onClick={() => this.props.history.push('/music')}>Let's Make Some Music!</Button>
         </header>
       </div>
     );
