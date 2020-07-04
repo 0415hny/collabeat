@@ -4,7 +4,8 @@ import Tone from "tone";
 import GridButton from "./GridButton";
 import TempoSlider from "./TempoSlider";
 
-const synth = new Tone.AMSynth();
+//const synth = new Tone.AMSynth();
+const synth = new Tone.FMSynth();
 const audioStyles = { width: "100%", height: "30px" };
 const audioCtx = Tone.context;
 const dest = audioCtx.createMediaStreamDestination();
@@ -20,6 +21,7 @@ class MusicBoard extends React.Component {
       notes: fillNotes(16),
       gridColours: createGridColourMatrix(4, 16),
       src: null,
+      instrument: "piano"
     };
   }
   playSound = (row, col) => {
@@ -139,14 +141,17 @@ class MusicBoard extends React.Component {
             );
           })}
         </Grid>
+        <div>&nbsp;</div>
         <Button onClick={() => this.playEntireBeat(synthPart)}>Record</Button>
         <Button onClick={() => this.stopEntireBeat(synthPart)}>
           Stop Recording
         </Button>
         <div align="center">
+          &nbsp;
           <TempoSlider value={Tone.Transport.bpm.value} handleChange={(val) => this.changeTempo(val)}/>
         </div>
         <div>
+          &nbsp;
           <audio controls style={audioStyles} src={this.state.src}></audio>
         </div>
       </div>
