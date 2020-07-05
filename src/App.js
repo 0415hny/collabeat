@@ -34,10 +34,12 @@ class App extends React.Component {
     return (
       <div className="App">
         <AppBar position="static" style={{ backgroundColor: "#2d1a63" }}>
-          <Toolbar>
+          <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
             <img src={logo} className="App-logo" alt="logo" />
-            <Button color="inherit">Login</Button>
-            <Button color="inherit" onClick={() => this.setState({ showSignUp: true })}>Create an Account</Button>
+            <span>
+              <Button color="inherit">Login</Button>
+              <Button color="inherit" onClick={() => this.setState({ showSignUp: true })}>Create an Account</Button>
+            </span>
           </Toolbar>
         </AppBar>
         <Switch>
