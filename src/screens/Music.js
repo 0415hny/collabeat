@@ -98,7 +98,7 @@ class Music extends React.Component {
     return (
       <div className="App">
         <div style={{ padding: 20, display: 'flex' }}>
-          <Button onClick={() => this.props.history.push("/")} style={{ backgroundColor: "#2d1a63", marginRight: 20 }}>
+          <Button onClick={() => this.props.history.push("/collabeat")} style={{ backgroundColor: "#2d1a63", marginRight: 20 }}>
             <img src={backIcon} style={{ height: 20, paddingRight: 10 }} />
             <img src={homeIcon} style={{ height: 30 }} />
           </Button>
