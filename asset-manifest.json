@@ -1,29 +1,29 @@
 {
   "files": {
-    "main.css": "/static/css/main.8601d85c.chunk.css",
-    "main.js": "/static/js/main.16a5371c.chunk.js",
-    "main.js.map": "/static/js/main.16a5371c.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.83c3e0c4.js",
-    "runtime-main.js.map": "/static/js/runtime-main.83c3e0c4.js.map",
-    "static/css/2.29c4d543.chunk.css": "/static/css/2.29c4d543.chunk.css",
-    "static/js/2.8b29ee05.chunk.js": "/static/js/2.8b29ee05.chunk.js",
-    "static/js/2.8b29ee05.chunk.js.map": "/static/js/2.8b29ee05.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.9972658334edbbd3923eedd5914c212b.js": "/precache-manifest.9972658334edbbd3923eedd5914c212b.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/2.29c4d543.chunk.css.map": "/static/css/2.29c4d543.chunk.css.map",
-    "static/css/main.8601d85c.chunk.css.map": "/static/css/main.8601d85c.chunk.css.map",
-    "static/js/2.8b29ee05.chunk.js.LICENSE.txt": "/static/js/2.8b29ee05.chunk.js.LICENSE.txt",
-    "static/media/Drum.png": "/static/media/Drum.90e062b2.png",
-    "static/media/Piano.png": "/static/media/Piano.90cdf42c.png",
-    "static/media/Sax.png": "/static/media/Sax.34fa8af0.png",
-    "static/media/Trumpet.png": "/static/media/Trumpet.5ed7990b.png"
+    "main.css": "/collabeat/static/css/main.8601d85c.chunk.css",
+    "main.js": "/collabeat/static/js/main.0f78161f.chunk.js",
+    "main.js.map": "/collabeat/static/js/main.0f78161f.chunk.js.map",
+    "runtime-main.js": "/collabeat/static/js/runtime-main.69d36ca1.js",
+    "runtime-main.js.map": "/collabeat/static/js/runtime-main.69d36ca1.js.map",
+    "static/css/2.29c4d543.chunk.css": "/collabeat/static/css/2.29c4d543.chunk.css",
+    "static/js/2.92f1abe5.chunk.js": "/collabeat/static/js/2.92f1abe5.chunk.js",
+    "static/js/2.92f1abe5.chunk.js.map": "/collabeat/static/js/2.92f1abe5.chunk.js.map",
+    "index.html": "/collabeat/index.html",
+    "precache-manifest.c91a797b5f4f0a1fe838531892ecc94c.js": "/collabeat/precache-manifest.c91a797b5f4f0a1fe838531892ecc94c.js",
+    "service-worker.js": "/collabeat/service-worker.js",
+    "static/css/2.29c4d543.chunk.css.map": "/collabeat/static/css/2.29c4d543.chunk.css.map",
+    "static/css/main.8601d85c.chunk.css.map": "/collabeat/static/css/main.8601d85c.chunk.css.map",
+    "static/js/2.92f1abe5.chunk.js.LICENSE.txt": "/collabeat/static/js/2.92f1abe5.chunk.js.LICENSE.txt",
+    "static/media/Drum.png": "/collabeat/static/media/Drum.90e062b2.png",
+    "static/media/Piano.png": "/collabeat/static/media/Piano.90cdf42c.png",
+    "static/media/Sax.png": "/collabeat/static/media/Sax.34fa8af0.png",
+    "static/media/Trumpet.png": "/collabeat/static/media/Trumpet.5ed7990b.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.83c3e0c4.js",
+    "static/js/runtime-main.69d36ca1.js",
     "static/css/2.29c4d543.chunk.css",
-    "static/js/2.8b29ee05.chunk.js",
+    "static/js/2.92f1abe5.chunk.js",
     "static/css/main.8601d85c.chunk.css",
-    "static/js/main.16a5371c.chunk.js"
+    "static/js/main.0f78161f.chunk.js"
   ]
 }
