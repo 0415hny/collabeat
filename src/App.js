@@ -43,7 +43,7 @@ class App extends React.Component {
           </Toolbar>
         </AppBar>
         <Switch>
-          <Route exact path="/" render={(props) => <Home {...props} />} />
+          <Route exact path="/collabeat" render={(props) => <Home {...props} />} />
           <Route exact path="/music" render={(props) => <Music {...props} />} />
         </Switch>
         <Modal
