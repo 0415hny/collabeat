@@ -42,6 +42,13 @@ object-assign
  */
 
 /**
+       *  Tone.js
+       *  @author Yotam Mann
+       *  @license http://opensource.org/licenses/MIT MIT License
+       *  @copyright 2014-2019 Yotam Mann
+       */
+
+/**
  * A better abstraction over CSS.
  *
  * @copyright Oleg Isonen (Slobodskoi) / Isonen 2014-present
