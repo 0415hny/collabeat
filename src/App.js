@@ -33,7 +33,7 @@ class App extends React.Component {
   
     return (
       <div className="App">
-        <AppBar position="static">
+        <AppBar position="static" style={{ backgroundColor: "#2d1a63" }}>
           <Toolbar>
             <img src={logo} className="App-logo" alt="logo" />
             <Button color="inherit">Login</Button>
