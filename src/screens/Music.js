@@ -9,6 +9,10 @@ import drum from "../img/Drum.png";
 import piano from "../img/Piano.png";
 import sax from "../img/Sax.png";
 import trumpet from "../img/Trumpet.png";
+import homeIcon from './home.png';
+import backIcon from './back.png';
+import shareIcon from './share.png';
+import downloadIcon from './download.png';
 
 // import './styles.css';
 
@@ -47,40 +51,13 @@ class Music extends React.Component {
     Tone.Transport.start();
   };
   render() {
-    return (
-      <div className="App">
-        <Button onClick={() => this.props.history.push("/")}>
-          Go back to home
-        </Button>
-
-        <p marginBottom="10px">Welcome to music page.</p>
-
-        <Container className="element">
-          <MusicBoard />
-        </Container>
-
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Grid container justify="center" spacing={2}>
-              {[0, 1, 2, 3].map((value) => (
-              <Grid key={value} item>
-                <InstrumentCard name={imageNames[value]} path={imagePaths[value]}/>
-              </Grid>
-              ))}
-            </Grid>
-          </Grid>
-        </Grid>
-
-        <div>&nbsp;</div>
-        <Button>Download Music</Button>
-        <div>&nbsp;</div>
-        <Chat/>
-        <div>&nbsp;</div>
-        <Popup
+    const share = (
+      <Popup
           trigger={
-            <button size="lg" className="button">
+            <Button style={{ backgroundColor: "#2d1a63", color: "white", margin: 10 }}>
+              <img src={shareIcon} style={{ height: 20, marginRight: 10 }} />
               Share Music
-            </button>
+            </Button>
           }
           modal
         >
@@ -116,6 +93,40 @@ class Music extends React.Component {
             </div>
           )}
         </Popup>
+    )
+
+    return (
+      <div className="App">
+        <div style={{ padding: 20, display: 'flex' }}>
+          <Button onClick={() => this.props.history.push("/")} style={{ backgroundColor: "#2d1a63", marginRight: 20 }}>
+            <img src={backIcon} style={{ height: 20, paddingRight: 10 }} />
+            <img src={homeIcon} style={{ height: 30 }} />
+          </Button>
+        </div>
+
+        <Container className="element">
+          <MusicBoard />
+        </Container>
+
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Grid container justify="center" spacing={2}>
+              {[0, 1, 2, 3].map((value) => (
+              <Grid key={value} item>
+                <InstrumentCard name={imageNames[value]} path={imagePaths[value]}/>
+              </Grid>
+              ))}
+            </Grid>
+          </Grid>
+        </Grid>
+
+        <div>&nbsp;</div>
+        <Button style={{ backgroundColor: "#2d1a63", color: "white", margin: 10 }}>
+          <img src={downloadIcon} style={{ height: 20, marginRight: 10 }}/>
+          Download Music
+        </Button>
+        {share}
+        <Chat/>
       </div>
     );
   }
