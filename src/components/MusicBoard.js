@@ -63,9 +63,10 @@ class MusicBoard extends React.Component {
   };
 
   recordTrack = () => {
+    let sampler = this.sampler;
     let part = new Tone.Sequence(
       function (time, note) {
-        synth.toMaster().triggerAttackRelease(note, "10hz", time);
+        sampler.triggerAttackRelease(note, "10hz", time);
       },
       this.state.notes,
       "4n"
