@@ -88,6 +88,8 @@ class MusicBoard extends React.Component {
       this.setState({
         src: URL.createObjectURL(blob),
       });
+
+      this.props.musicComposed(URL.createObjectURL(blob));
     };
   };
 
