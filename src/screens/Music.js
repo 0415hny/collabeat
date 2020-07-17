@@ -4,7 +4,7 @@ import Chat from "../components/Chat";
 import Popup from "reactjs-popup";
 import MusicBoard from "../components/MusicBoard";
 import InstrumentCard from "../components/InstrumentCard";
-import Tone from "tone";
+//import Tone from "tone";
 import drum from "../img/Drum.png";
 import piano from "../img/Piano.png";
 import sax from "../img/Sax.png";
@@ -68,7 +68,7 @@ class Music extends React.Component {
         >
           {(close) => (
             <div className="modal">
-              <a className="close" onClick={close}>
+              <a className="close" onClick={close} href="">
                 &times;
               </a>
               <div className="header">Share Music to Social Media</div>

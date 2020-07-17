@@ -3,16 +3,14 @@ import { Grid, Button } from "@material-ui/core";
 import Tone from "tone";
 import GridButton from "./GridButton";
 import Options from "./Options";
+import LoadMusic from "./LoadMusic";
 
-//const synth = new Tone.AMSynth();
-const synth = new Tone.FMSynth();
 const audioStyles = { width: "100%", height: "30px" };
 const audioCtx = Tone.context;
 const dest = audioCtx.createMediaStreamDestination();
 const recorder = new MediaRecorder(dest.stream);
-synth.connect(dest);
 
-const NUMROWS = 8;
+const NUMROWS = 7;
 const NUMCOLS = 16;
 
 class MusicBoard extends React.Component {
@@ -25,19 +23,15 @@ class MusicBoard extends React.Component {
       gridColours: createGridColourMatrix(NUMROWS, NUMCOLS),
       src: null,
       instrument: "piano",
-      // scale : {
-      //   0: "C4",
-      //   1: "D4",
-      //   2: "E4",
-      //   3: "F4",
-      //   4: "G4",
-      //   5: "A4",
-      //   6: "B4",
-      //   7: "C5",
-      // }
-      scale : [ "C4", "D4","E4", "F4","G4","A4","B4","C5" ]
+      scale : [ "B2", "A2","G2", "F2","E2","D2","C2" ],
+      loaded: { isLoaded: false }
     };
+    this.handleClick = this.handleClick.bind(this);
+
+    this.sampler = LoadMusic().toMaster();
+    this.sampler.connect(dest);
   }
+    
   playSound = (row, col) => {
     const { scale } = this.state;
 
@@ -48,7 +42,7 @@ class MusicBoard extends React.Component {
       notes: notes,
     });
     console.log(row, scale[row]);
-    synth.toMaster().triggerAttackRelease(newNote, "8n");
+    this.sampler.triggerAttackRelease(newNote, "8n");
 
     console.log(this.state.notes);
   };
@@ -112,6 +106,7 @@ class MusicBoard extends React.Component {
   };
 
   handleClick = (row, col) => {
+    
     let gridC = [...this.state.gridColours];
     let currentColour = gridC[row][col];
     if (currentColour === "default") {
@@ -138,6 +133,7 @@ class MusicBoard extends React.Component {
               <Grid item key={i}>
                 <GridButton
                   handleClick={() => this.handleClick(row, col)}
+                  disabled={!isLoaded} 
                   colour={currentCol}
                 />
               </Grid>
@@ -146,13 +142,15 @@ class MusicBoard extends React.Component {
         </Grid>
       );
     };
+    let sampler = this.sampler;
     let synthPart = new Tone.Sequence(
       function (time, note) {
-        synth.toMaster().triggerAttackRelease(note, "10hz", time);
+        sampler.triggerAttackRelease(note, "10hz", time);
       },
       this.state.notes,
       "4n"
     );
+    const { isLoaded } = this.state.loaded;
     return (
       <div>
         <Grid container spacing={1} wrap="nowrap">
