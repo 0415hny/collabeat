@@ -1,18 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
+import { HashRouter } from 'react-router-dom';
+import { createHashHistory } from 'history';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-const history = createBrowserHistory();
+const history = createHashHistory();
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router history={history}>
+    <HashRouter basename="/collabeat" history={history}>
       <App />
-    </Router>
+    </HashRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -9,10 +9,10 @@ import drum from "../img/Drum.png";
 import piano from "../img/Piano.png";
 import sax from "../img/Sax.png";
 import trumpet from "../img/Trumpet.png";
-import homeIcon from './home.png';
-import backIcon from './back.png';
-import shareIcon from './share.png';
-import downloadIcon from './download.png';
+import homeIcon from '../img/home.png';
+import backIcon from '../img/back.png';
+import shareIcon from '../img/share.png';
+import downloadIcon from '../img/download.png';
 
 // import './styles.css';
 
@@ -23,34 +23,39 @@ import {
   FacebookShareButton,
   FacebookMessengerIcon,
   FacebookMessengerShareButton,
-  TumblrIcon,
-  TumblrShareButton,
-  TwitterShareButton,
-  TwitterIcon,
-  RedditIcon,
-  RedditShareButton,
-  WhatsappIcon,
-  WhatsappShareButton,
 } from "react-share";
 
 const imageNames = ["Piano", "Sax", "Drum", "Trumpet"];
 const imagePaths = [piano, sax, drum, trumpet];
 
 class Music extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  // }
-  playSound = () => {
-    const synth = new Tone.MembraneSynth().toMaster();
+  constructor(props) {
+    super(props);
+    this.state = {
+      disabledDownload: true,
+      musicSrc: null,
+    }
+  }
+  // playSound = () => {
+  //   const synth = new Tone.MembraneSynth().toMaster();
 
-    // const loop = new Tone.Loop(function (time) {
-    //   //triggered every eighth note.
-    //   synth.triggerAttackRelease("C2", "2n");
-    // }, "2n").start(0);
+  //   const loop = new Tone.Loop(function (time) {
+  //     //triggered every eighth note.
+  //     synth.triggerAttackRelease("C2", "2n");
+  //   }, "2n").start(0);
 
-    Tone.Transport.start();
-  };
+  //   Tone.Transport.start();
+  // };
+  musicComposed = (src) => {
+    this.setState({
+      disabledDownload: false,
+      musicSrc: src,
+    });
+  }
+
   render() {
+    const { disabledDownload, musicSrc } = this.state;
+
     const share = (
       <Popup
           trigger={
@@ -74,18 +79,6 @@ class Music extends React.Component {
                 <FacebookMessengerShareButton>
                   <FacebookMessengerIcon size={36} round />
                 </FacebookMessengerShareButton>
-                <TwitterShareButton>
-                  <TwitterIcon size={36} round />
-                </TwitterShareButton>
-                <TumblrShareButton>
-                  <TumblrIcon size={36} round />
-                </TumblrShareButton>
-                <RedditShareButton>
-                  <RedditIcon size={36} round />
-                </RedditShareButton>
-                <WhatsappShareButton>
-                  <WhatsappIcon size={36} round />
-                </WhatsappShareButton>
                 <EmailShareButton>
                   <EmailIcon size={36} round />
                 </EmailShareButton>
@@ -98,14 +91,14 @@ class Music extends React.Component {
     return (
       <div className="App">
         <div style={{ padding: 20, display: 'flex' }}>
-          <Button onClick={() => this.props.history.push("/collabeat")} style={{ backgroundColor: "#2d1a63", marginRight: 20 }}>
+          <Button onClick={() => this.props.history.push("/")} style={{ backgroundColor: "#2d1a63", marginRight: 20 }}>
             <img alt="alt" src={backIcon} style={{ height: 20, paddingRight: 10 }} />
             <img alt="alt" src={homeIcon} style={{ height: 30 }} />
           </Button>
         </div>
 
         <Container className="element">
-          <MusicBoard />
+          <MusicBoard musicComposed={this.musicComposed} />
         </Container>
 
         <Grid container spacing={2}>
@@ -120,10 +113,9 @@ class Music extends React.Component {
           </Grid>
         </Grid>
 
-        <div>&nbsp;</div>
-        <Button style={{ backgroundColor: "#2d1a63", color: "white", margin: 10 }}>
+        <Button disabled={disabledDownload} style={{ opacity: disabledDownload ? 0.7 : 1, backgroundColor: disabledDownload ? "grey" : "#2d1a63", color: "white", margin: 10 }}>
           <img alt="alt" src={downloadIcon} style={{ height: 20, marginRight: 10 }}/>
-          Download Music
+          <a href={musicSrc} download style={{ textDecoration: 'none', color: 'white' }}>Download Music</a> 
         </Button>
         {share}
         <Chat/>

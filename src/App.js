@@ -36,15 +36,15 @@ class App extends React.Component {
         <AppBar position="static" style={{ backgroundColor: "#2d1a63" }}>
           <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
             <img src={logo} className="App-logo" alt="logo" />
-            <span>
+            {/* <span>
               <Button color="inherit">Login</Button>
               <Button color="inherit" onClick={() => this.setState({ showSignUp: true })}>Create an Account</Button>
-            </span>
+            </span> */}
           </Toolbar>
         </AppBar>
         <Switch>
-          <Route exact path="/collabeat" render={(props) => <Home {...props} />} />
-          <Route exact path="/collabeat/music" render={(props) => <Music {...props} />} />
+          <Route exact path="/" render={(props) => <Home {...props} />} />
+          <Route exact path="/music" render={(props) => <Music {...props} />} />
         </Switch>
         <Modal
           isOpen={showSignUp}

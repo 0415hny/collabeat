@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, Button } from "@material-ui/core";
 import Tone from "tone";
 import GridButton from "./GridButton";
-import TempoSlider from "./TempoSlider";
+import Options from "./Options";
 
 //const synth = new Tone.AMSynth();
 const synth = new Tone.FMSynth();
@@ -15,6 +15,12 @@ synth.connect(dest);
 const NUMROWS = 8;
 const NUMCOLS = 16;
 
+const buttonStyles = {
+  backgroundColor: "#2d1a63",
+  color: "white",
+  marginRight: 20,
+};
+
 class MusicBoard extends React.Component {
   constructor(props) {
     super(props);
@@ -25,29 +31,19 @@ class MusicBoard extends React.Component {
       gridColours: createGridColourMatrix(NUMROWS, NUMCOLS),
       src: null,
       instrument: "piano",
-      isRecording: false,
-      isPlaying: false,
+      scale: ["C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5"],
     };
   }
   playSound = (row, col) => {
-    let cMajorScaleRowToNote = {
-      0: "C4",
-      1: "D4",
-      2: "E4",
-      3: "F4",
-      4: "G4",
-      5: "A4",
-      6: "B4",
-      7: "C5",
-    };
+    const { scale } = this.state;
 
-    let newNote = cMajorScaleRowToNote[row];
+    let newNote = scale[row];
     let notes = [...this.state.notes];
     notes[col] = newNote;
     this.setState({
       notes: notes,
     });
-    console.log(row, cMajorScaleRowToNote[row]);
+    console.log(row, scale[row]);
     synth.toMaster().triggerAttackRelease(newNote, "8n");
 
     console.log(this.state.notes);
@@ -62,22 +58,16 @@ class MusicBoard extends React.Component {
     console.log(this.state.notes);
   };
 
-  recordTrack = (part) => {
-    this.setState({
-      isRecording: true,
-    });
-
-    // create a new sequence with the synth and notes
-    console.log(this.state.notes);
-
-    // Setup the synth to be ready to play on beat 1
+  recordTrack = () => {
+    let part = new Tone.Sequence(
+      function (time, note) {
+        synth.toMaster().triggerAttackRelease(note, "10hz", time);
+      },
+      this.state.notes,
+      "4n"
+    );
     part.start();
-    // Note that if you pass a time into the start method
-    // you can specify when the synth part starts
-    // e.g. .start('8n') will start after 1 eighth note
-    // start the transport which controls the main timeline
     recorder.start();
-
     Tone.Transport.start();
   };
 
@@ -85,9 +75,6 @@ class MusicBoard extends React.Component {
     recorder.stop();
     part.stop();
     Tone.Transport.stop();
-    this.setState({
-      isRecording: false,
-    });
 
     let data = [];
 
@@ -97,11 +84,25 @@ class MusicBoard extends React.Component {
       this.setState({
         src: URL.createObjectURL(blob),
       });
+
+      this.props.musicComposed(URL.createObjectURL(blob));
     };
   };
 
-  changeTempo = (val) => {
-    Tone.Transport.bpm.value = val;
+  changeOptions = (val, type) => {
+    console.log("in changetempo", val, type);
+    switch (type) {
+      case "tempo":
+        Tone.Transport.bpm.value = val;
+        break;
+      case "volume":
+        break;
+      case "scale":
+        this.setState({ scale: val });
+        break;
+      default:
+        break;
+    }
   };
 
   handleClick = (row, col) => {
@@ -122,11 +123,7 @@ class MusicBoard extends React.Component {
   };
 
   playTrack = (part) => {
-    this.setState({
-      isPlaying: true,
-    });
     Tone.Transport.stop();
-    Tone.Transport.cancel(0);
     if (this.state.notes) {
       part.start();
       Tone.Transport.start();
@@ -136,9 +133,6 @@ class MusicBoard extends React.Component {
   };
 
   stopTrack = (part) => {
-    this.setState({
-      isPlaying: false,
-    });
     part.stop();
     Tone.Transport.stop();
   };
@@ -179,41 +173,45 @@ class MusicBoard extends React.Component {
             );
           })}
         </Grid>
-        <div>&nbsp;</div>
-        <Button
-          onClick={() => this.playTrack(synthPart)}
-          disabled={this.state.isPlaying || this.state.isRecording}
-        >
-          Play
-        </Button>
-        <Button
-          onClick={() => this.stopTrack(synthPart)}
-          disabled={!this.state.isPlaying}
-        >
-          Stop
-        </Button>
-        <Button
-          onClick={() => this.recordTrack(synthPart)}
-          disabled={this.state.isRecording || this.state.isPlaying}
-        >
-          Record
-        </Button>
-        <Button
-          onClick={() => this.stopRecording(synthPart)}
-          disabled={!this.state.isRecording}
-        >
-          Stop Recording
-        </Button>
+        <Grid container justify="center" style={{ margin: 20 }}>
+          <Button
+            style={buttonStyles}
+            onClick={() => this.playTrack(synthPart)}
+          >
+            Play
+          </Button>
+          <Button
+            style={buttonStyles}
+            onClick={() => this.stopTrack(synthPart)}
+          >
+            Stop
+          </Button>
+          <Button style={buttonStyles} onClick={() => this.recordTrack()}>
+            Start Recording
+          </Button>
+          <Button
+            style={buttonStyles}
+            onClick={() => this.stopRecording(synthPart)}
+          >
+            End Recording
+          </Button>
+        </Grid>
         <div align="center">
           &nbsp;
-          <TempoSlider
-            value={Tone.Transport.bpm.value}
-            handleChange={(val) => this.changeTempo(val)}
+          <Options
+            tempoValue={Tone.Transport.bpm.value}
+            volumeValue={50}
+            handleChange={this.changeOptions}
           />
         </div>
         <div>
           &nbsp;
-          <audio controls style={audioStyles} src={this.state.src}></audio>
+          <audio
+            controls
+            style={audioStyles}
+            src={this.state.src}
+            controlsList="nodownload"
+          ></audio>
         </div>
       </div>
     );
