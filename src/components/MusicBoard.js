@@ -3,6 +3,8 @@ import { Grid, Button } from "@material-ui/core";
 import Tone from "tone";
 import GridButton from "./GridButton";
 import Options from "./Options";
+import Pusher from "pusher-js";
+import { v4 } from "uuid";
 
 //const synth = new Tone.AMSynth();
 const synth = new Tone.FMSynth();
@@ -33,7 +35,60 @@ class MusicBoard extends React.Component {
       instrument: "piano",
       scale: ["C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5"],
     };
+
+    this.pusher = new Pusher("0aeb7e085274c0ecc9c5", {
+      cluster: "us2",
+    });
   }
+
+  userId = v4();
+
+  componentDidMount() {
+    console.log("loaded");
+    const channel = this.pusher.subscribe("makeMusic");
+    channel.bind("pickNotes", (data) => {
+      const { userId, row, col, note } = data;
+      if (userId !== this.userId) {
+        this.updateBoard(row, col, note);
+        console.log("here");
+        console.log({ data });
+      }
+    });
+  }
+
+  sendMusicData = async (row, col, newNote) => {
+    const body = {
+      userId: this.userId,
+      row: row,
+      col: col,
+      note: newNote,
+    };
+    // We use the native fetch API to make requests to the server
+    const req = await fetch("/music", {
+      method: "post",
+      body: JSON.stringify(body),
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    const res = await req.json();
+    console.log({ sending: res });
+  };
+
+  updateBoard = (row, col, note) => {
+    let notes = [...this.state.notes];
+    notes[col] = note;
+    this.setState({
+      notes: notes,
+    });
+
+    let gridC = [...this.state.gridColours];
+    gridC[row][col] = "secondary";
+    this.setState({
+      gridColours: gridC,
+    });
+  };
+
   playSound = (row, col) => {
     const { scale } = this.state;
 
@@ -45,7 +100,7 @@ class MusicBoard extends React.Component {
     });
     console.log(row, scale[row]);
     synth.toMaster().triggerAttackRelease(newNote, "8n");
-
+    this.sendMusicData(row, col, newNote);
     console.log(this.state.notes);
   };
 
