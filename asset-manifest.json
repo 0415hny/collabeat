@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/collabeat/static/css/main.8601d85c.chunk.css",
-    "main.js": "/collabeat/static/js/main.461ae02e.chunk.js",
-    "main.js.map": "/collabeat/static/js/main.461ae02e.chunk.js.map",
+    "main.js": "/collabeat/static/js/main.f01075ed.chunk.js",
+    "main.js.map": "/collabeat/static/js/main.f01075ed.chunk.js.map",
     "runtime-main.js": "/collabeat/static/js/runtime-main.69d36ca1.js",
     "runtime-main.js.map": "/collabeat/static/js/runtime-main.69d36ca1.js.map",
     "static/css/2.29c4d543.chunk.css": "/collabeat/static/css/2.29c4d543.chunk.css",
     "static/js/2.92f1abe5.chunk.js": "/collabeat/static/js/2.92f1abe5.chunk.js",
     "static/js/2.92f1abe5.chunk.js.map": "/collabeat/static/js/2.92f1abe5.chunk.js.map",
     "index.html": "/collabeat/index.html",
-    "precache-manifest.ff3dbbc17675962d79012d7e9548c51d.js": "/collabeat/precache-manifest.ff3dbbc17675962d79012d7e9548c51d.js",
+    "precache-manifest.71632d84f4b02503c9b1f9783749a484.js": "/collabeat/precache-manifest.71632d84f4b02503c9b1f9783749a484.js",
     "service-worker.js": "/collabeat/service-worker.js",
     "static/css/2.29c4d543.chunk.css.map": "/collabeat/static/css/2.29c4d543.chunk.css.map",
     "static/css/main.8601d85c.chunk.css.map": "/collabeat/static/css/main.8601d85c.chunk.css.map",
@@ -24,6 +24,6 @@
     "static/css/2.29c4d543.chunk.css",
     "static/js/2.92f1abe5.chunk.js",
     "static/css/main.8601d85c.chunk.css",
-    "static/js/main.461ae02e.chunk.js"
+    "static/js/main.f01075ed.chunk.js"
   ]
 }
