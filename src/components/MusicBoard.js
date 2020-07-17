@@ -25,16 +25,6 @@ class MusicBoard extends React.Component {
       gridColours: createGridColourMatrix(NUMROWS, NUMCOLS),
       src: null,
       instrument: "piano",
-      // scale : {
-      //   0: "C4",
-      //   1: "D4",
-      //   2: "E4",
-      //   3: "F4",
-      //   4: "G4",
-      //   5: "A4",
-      //   6: "B4",
-      //   7: "C5",
-      // }
       scale : [ "C4", "D4","E4", "F4","G4","A4","B4","C5" ]
     };
   }
