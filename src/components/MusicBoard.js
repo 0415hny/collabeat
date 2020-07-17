@@ -12,33 +12,40 @@ const dest = audioCtx.createMediaStreamDestination();
 const recorder = new MediaRecorder(dest.stream);
 synth.connect(dest);
 
+const NUMROWS = 8;
+const NUMCOLS = 16;
+
 class MusicBoard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      rows: fill(4),
-      cols: fill(16),
-      notes: fillNotes(16),
-      gridColours: createGridColourMatrix(4, 16),
+      rows: fill(NUMROWS),
+      cols: fill(NUMCOLS),
+      notes: fillNotes(NUMCOLS),
+      gridColours: createGridColourMatrix(NUMROWS, NUMCOLS),
       src: null,
-      instrument: "piano"
+      instrument: "piano",
     };
   }
   playSound = (row, col) => {
-    let rowToNote = {
-      0: "A1",
-      1: "D2",
-      2: "E3",
-      3: "C4",
+    let cMajorScaleRowToNote = {
+      0: "C4",
+      1: "D4",
+      2: "E4",
+      3: "F4",
+      4: "G4",
+      5: "A4",
+      6: "B4",
+      7: "C5",
     };
 
-    let newNote = rowToNote[row];
+    let newNote = cMajorScaleRowToNote[row];
     let notes = [...this.state.notes];
     notes[col] = newNote;
     this.setState({
       notes: notes,
     });
-    console.log(row, rowToNote[row]);
+    console.log(row, cMajorScaleRowToNote[row]);
     synth.toMaster().triggerAttackRelease(newNote, "8n");
 
     console.log(this.state.notes);
@@ -148,7 +155,10 @@ class MusicBoard extends React.Component {
         </Button>
         <div align="center">
           &nbsp;
-          <TempoSlider value={Tone.Transport.bpm.value} handleChange={(val) => this.changeTempo(val)}/>
+          <TempoSlider
+            value={Tone.Transport.bpm.value}
+            handleChange={(val) => this.changeTempo(val)}
+          />
         </div>
         <div>
           &nbsp;
