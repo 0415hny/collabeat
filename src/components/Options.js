@@ -13,25 +13,25 @@ const useStyles = makeStyles({
   },
 });
 
-// TODO: write a function to play the scales
-const majorScales = [
-  // { scaleName: "Ab", notes : { 0: "Ab3", 1: "Bb3", 2: "C4", 3: "Db4", 4: "Eb4", 5: "F4", 6: "G4", 7: "Ab4" }},
-  { scaleName: "Ab", notes : ["Ab3", "Bb3", "C4", "Db4", "Eb4", "F4", "G4", "Ab4"]},
-  { scaleName: "A", notes : ["A3", "B3", "C4", "Db4", "Eb4", "F4", "G4", "Ab4"]},
-  { scaleName: "Bb", notes : ["Bb3", "C4", "D4", "Eb4", "F4", "G4", "A4", "Bb4"]},
-  { scaleName: "B", notes : ["B3","C#4","D#4","E4","F#4","G#4","A#4","B4"]},
-  { scaleName: "Cb", notes : ["Cb4","Db4","Eb4","Fb4","Gb4","Ab4","Bb4","Cb5"]},
-  { scaleName: "C", notes : ["C4","D4","E4","F4","G4","A4","B4","C5"]},
-  { scaleName: "C#", notes : ["C#4","D#4","E#4","F#4","G#4","A#4","B#4","C#5"]},
-  { scaleName: "Db", notes : ["Db4","Eb4","F4","Gb4","Ab4","Bb4","C5","Db5"]},
-  { scaleName: "D", notes : ["D4","E4","F#4","G4","A4","B4","C#5","D5"]},
-  { scaleName: "Eb", notes : ["Eb4","F4","G4","Ab4","Bb4","C5","D5","Eb5"]},
-  { scaleName: "E", notes : ["E4","F#4","G#4","A4","B4","C#5","D#5","E5"]},
-  { scaleName: "F", notes : ["F4","G4","A4","Bb4","C5","D5","E5","F5"]},
-  { scaleName: "F#", notes : ["F#4","G#4","A#4","B4","C#5","D#5","E#5","F#5"]},
-  { scaleName: "Gb", notes : ["Gb4","Ab4","Bb4","Cb5","Db5","Eb5","F5","Gb5"]},
-  { scaleName: "G", notes : ["G4","A4","B4","C5","D5","E5","F#5","G5"]},
-]
+// // TODO: write a function to play the scales
+// const majorScales = [
+//   // { scaleName: "Ab", notes : { 0: "Ab3", 1: "Bb3", 2: "C4", 3: "Db4", 4: "Eb4", 5: "F4", 6: "G4", 7: "Ab4" }},
+//   { scaleName: "Ab", notes : ["Ab3", "Bb3", "C4", "Db4", "Eb4", "F4", "G4", "Ab4"]},
+//   { scaleName: "A", notes : ["A3", "B3", "C4", "Db4", "Eb4", "F4", "G4", "Ab4"]},
+//   { scaleName: "Bb", notes : ["Bb3", "C4", "D4", "Eb4", "F4", "G4", "A4", "Bb4"]},
+//   { scaleName: "B", notes : ["B3","C#4","D#4","E4","F#4","G#4","A#4","B4"]},
+//   { scaleName: "Cb", notes : ["Cb4","Db4","Eb4","Fb4","Gb4","Ab4","Bb4","Cb5"]},
+//   { scaleName: "C", notes : ["C4","D4","E4","F4","G4","A4","B4","C5"]},
+//   { scaleName: "C#", notes : ["C#4","D#4","E#4","F#4","G#4","A#4","B#4","C#5"]},
+//   { scaleName: "Db", notes : ["Db4","Eb4","F4","Gb4","Ab4","Bb4","C5","Db5"]},
+//   { scaleName: "D", notes : ["D4","E4","F#4","G4","A4","B4","C#5","D5"]},
+//   { scaleName: "Eb", notes : ["Eb4","F4","G4","Ab4","Bb4","C5","D5","Eb5"]},
+//   { scaleName: "E", notes : ["E4","F#4","G#4","A4","B4","C#5","D#5","E5"]},
+//   { scaleName: "F", notes : ["F4","G4","A4","Bb4","C5","D5","E5","F5"]},
+//   { scaleName: "F#", notes : ["F#4","G#4","A#4","B4","C#5","D#5","E#5","F#5"]},
+//   { scaleName: "Gb", notes : ["Gb4","Ab4","Bb4","Cb5","Db5","Eb5","F5","Gb5"]},
+//   { scaleName: "G", notes : ["G4","A4","B4","C5","D5","E5","F#5","G5"]},
+// ]
 
 
 export default function Options(props) {
@@ -39,8 +39,8 @@ export default function Options(props) {
   const [tempoValue, setTempoValue] = React.useState(props.tempoValue);
   const [volumeValue, setVolumeValue] = React.useState(props.volumeValue);
 
-  const initialScale = new Array(majorScales.length).fill('white');
-  const [scaleButtonColor, setScaleButtonColor] = React.useState(initialScale);
+  //const initialScale = new Array(majorScales.length).fill('white');
+  //const [scaleButtonColor, setScaleButtonColor] = React.useState(initialScale);
 
   const handleSliderChange = (e, val, type) => {
     console.log('handleslider called', val, type);
@@ -75,12 +75,12 @@ export default function Options(props) {
     props.handleChange(val, type);
   };
 
-  const handleScaleChange = (notes, i) => {
-    props.handleChange(notes, "scale")
-    const newArr = new Array(majorScales.length).fill('white');
-    newArr[i] = 'lightGrey';
-    setScaleButtonColor(newArr);
-  }
+  // const handleScaleChange = (notes, i) => {
+  //   props.handleChange(notes, "scale")
+  //   const newArr = new Array(majorScales.length).fill('white');
+  //   newArr[i] = 'lightGrey';
+  //   setScaleButtonColor(newArr);
+  // }
 
   return (
     <div className={classes.root}>
@@ -145,10 +145,10 @@ export default function Options(props) {
       {/* <Typography id="input-slider" gutterBottom>
         Pitch
       </Typography> */}
-      <Typography id="input-slider" gutterBottom>
+      {/* <Typography id="input-slider" gutterBottom>
         Major Scale : 
-      </Typography>
-      <Grid>
+      </Typography> */}
+      {/* <Grid>
         {majorScales.map((val, i) => {
           return (
             <button key={i} style={{ backgroundColor: scaleButtonColor[i] }} onClick={() => handleScaleChange(val.notes, i)}>
@@ -156,7 +156,7 @@ export default function Options(props) {
             </button>
           );
         })}
-      </Grid>
+      </Grid> */}
     </div>
   );
 }
