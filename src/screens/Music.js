@@ -40,16 +40,17 @@ class Music extends React.Component {
   // constructor(props) {
   //   super(props);
   // }
-  playSound = () => {
-    const synth = new Tone.MembraneSynth().toMaster();
+  // playSound = () => {
+  //   const synth = new Tone.MembraneSynth().toMaster();
 
-    // const loop = new Tone.Loop(function (time) {
-    //   //triggered every eighth note.
-    //   synth.triggerAttackRelease("C2", "2n");
-    // }, "2n").start(0);
+  //   const loop = new Tone.Loop(function (time) {
+  //     //triggered every eighth note.
+  //     synth.triggerAttackRelease("C2", "2n");
+  //   }, "2n").start(0);
 
-    Tone.Transport.start();
-  };
+  //   Tone.Transport.start();
+  // };
+
   render() {
     const share = (
       <Popup
@@ -120,7 +121,6 @@ class Music extends React.Component {
           </Grid>
         </Grid>
 
-        <div>&nbsp;</div>
         <Button style={{ backgroundColor: "#2d1a63", color: "white", margin: 10 }}>
           <img alt="alt" src={downloadIcon} style={{ height: 20, marginRight: 10 }}/>
           Download Music
