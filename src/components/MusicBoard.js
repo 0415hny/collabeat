@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, Button } from "@material-ui/core";
 import Tone from "tone";
 import GridButton from "./GridButton";
-import TempoSlider from "./TempoSlider";
+import Options from "./Options";
 
 //const synth = new Tone.AMSynth();
 const synth = new Tone.FMSynth();
@@ -25,27 +25,29 @@ class MusicBoard extends React.Component {
       gridColours: createGridColourMatrix(NUMROWS, NUMCOLS),
       src: null,
       instrument: "piano",
+      // scale : {
+      //   0: "C4",
+      //   1: "D4",
+      //   2: "E4",
+      //   3: "F4",
+      //   4: "G4",
+      //   5: "A4",
+      //   6: "B4",
+      //   7: "C5",
+      // }
+      scale : [ "C4", "D4","E4", "F4","G4","A4","B4","C5" ]
     };
   }
   playSound = (row, col) => {
-    let cMajorScaleRowToNote = {
-      0: "C4",
-      1: "D4",
-      2: "E4",
-      3: "F4",
-      4: "G4",
-      5: "A4",
-      6: "B4",
-      7: "C5",
-    };
+    const { scale } = this.state;
 
-    let newNote = cMajorScaleRowToNote[row];
+    let newNote = scale[row];
     let notes = [...this.state.notes];
     notes[col] = newNote;
     this.setState({
       notes: notes,
     });
-    console.log(row, cMajorScaleRowToNote[row]);
+    console.log(row, scale[row]);
     synth.toMaster().triggerAttackRelease(newNote, "8n");
 
     console.log(this.state.notes);
@@ -88,11 +90,25 @@ class MusicBoard extends React.Component {
       this.setState({
         src: URL.createObjectURL(blob),
       });
+
+      this.props.musicComposed(URL.createObjectURL(blob));
     };
   };
 
-  changeTempo = (val) => {
-    Tone.Transport.bpm.value = val;
+  changeOptions = (val, type) => {
+    console.log('in changetempo', val, type);
+    switch (type) {
+      case 'tempo':
+        Tone.Transport.bpm.value = val;
+        break;
+      case 'volume':
+        break;
+      case 'scale':
+        this.setState({ scale: val });
+        break;
+      default:
+        break;
+    }
   };
 
   handleClick = (row, col) => {
@@ -155,14 +171,15 @@ class MusicBoard extends React.Component {
         </Button>
         <div align="center">
           &nbsp;
-          <TempoSlider
-            value={Tone.Transport.bpm.value}
-            handleChange={(val) => this.changeTempo(val)}
+          <Options
+            tempoValue={Tone.Transport.bpm.value}
+            volumeValue={50}
+            handleChange={this.changeOptions}
           />
         </div>
         <div>
           &nbsp;
-          <audio controls style={audioStyles} src={this.state.src}></audio>
+          <audio controls style={audioStyles} src={this.state.src} controlsList="nodownload"></audio>
         </div>
       </div>
     );
