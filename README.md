@@ -1,6 +1,7 @@
 ## Welcome to Collabeat
 
-Welcome team, git clone and npm start to run it locally
+https://0415hny.github.io/collabeat
+
 
 ## Available Scripts
 

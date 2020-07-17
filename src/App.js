@@ -44,7 +44,7 @@ class App extends React.Component {
         </AppBar>
         <Switch>
           <Route exact path="/collabeat" render={(props) => <Home {...props} />} />
-          <Route exact path="/music" render={(props) => <Music {...props} />} />
+          <Route exact path="/collabeat/music" render={(props) => <Music {...props} />} />
         </Switch>
         <Modal
           isOpen={showSignUp}

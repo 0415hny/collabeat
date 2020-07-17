@@ -15,7 +15,7 @@ class Home extends React.Component {
           <p>
             Welcome to Collabeat!
           </p>
-          <Button color="secondary" variant="outlined" onClick={() => this.props.history.push('/music')}>Let's Make Some Music!</Button>
+          <Button color="secondary" variant="outlined" onClick={() => this.props.history.push('/collabeat/music')}>Let's Make Some Music!</Button>
         </header>
       </div>
     );
