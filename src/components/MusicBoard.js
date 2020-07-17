@@ -25,6 +25,8 @@ class MusicBoard extends React.Component {
       gridColours: createGridColourMatrix(NUMROWS, NUMCOLS),
       src: null,
       instrument: "piano",
+      isRecording: false,
+      isPlaying: false,
     };
   }
   playSound = (row, col) => {
@@ -60,7 +62,11 @@ class MusicBoard extends React.Component {
     console.log(this.state.notes);
   };
 
-  playEntireBeat = (part) => {
+  recordTrack = (part) => {
+    this.setState({
+      isRecording: true,
+    });
+
     // create a new sequence with the synth and notes
     console.log(this.state.notes);
 
@@ -75,10 +81,13 @@ class MusicBoard extends React.Component {
     Tone.Transport.start();
   };
 
-  stopEntireBeat = (part) => {
+  stopRecording = (part) => {
     recorder.stop();
     part.stop();
     Tone.Transport.stop();
+    this.setState({
+      isRecording: false,
+    });
 
     let data = [];
 
@@ -110,6 +119,28 @@ class MusicBoard extends React.Component {
     });
 
     console.log({ gridC });
+  };
+
+  playTrack = (part) => {
+    this.setState({
+      isPlaying: true,
+    });
+    Tone.Transport.stop();
+    Tone.Transport.cancel(0);
+    if (this.state.notes) {
+      part.start();
+      Tone.Transport.start();
+    } else {
+      console.log("no notes to play");
+    }
+  };
+
+  stopTrack = (part) => {
+    this.setState({
+      isPlaying: false,
+    });
+    part.stop();
+    Tone.Transport.stop();
   };
 
   render() {
@@ -149,8 +180,28 @@ class MusicBoard extends React.Component {
           })}
         </Grid>
         <div>&nbsp;</div>
-        <Button onClick={() => this.playEntireBeat(synthPart)}>Record</Button>
-        <Button onClick={() => this.stopEntireBeat(synthPart)}>
+        <Button
+          onClick={() => this.playTrack(synthPart)}
+          disabled={this.state.isPlaying || this.state.isRecording}
+        >
+          Play
+        </Button>
+        <Button
+          onClick={() => this.stopTrack(synthPart)}
+          disabled={!this.state.isPlaying}
+        >
+          Stop
+        </Button>
+        <Button
+          onClick={() => this.recordTrack(synthPart)}
+          disabled={this.state.isRecording || this.state.isPlaying}
+        >
+          Record
+        </Button>
+        <Button
+          onClick={() => this.stopRecording(synthPart)}
+          disabled={!this.state.isRecording}
+        >
           Stop Recording
         </Button>
         <div align="center">
