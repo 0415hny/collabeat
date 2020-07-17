@@ -164,11 +164,12 @@ class MusicBoard extends React.Component {
             );
           })}
         </Grid>
-        <div>&nbsp;</div>
-        <Button onClick={() => this.playEntireBeat(synthPart)}>Record</Button>
-        <Button onClick={() => this.stopEntireBeat(synthPart)}>
-          Stop Recording
-        </Button>
+        <Grid container justify="center" style={{ margin: 20 }}>
+          <Button style={{ backgroundColor: "#2d1a63", color: "white", marginRight: 20 }} onClick={() => this.playEntireBeat(synthPart)}>Start Recording</Button>
+          <Button style={{ backgroundColor: "#2d1a63", color: "white" }} onClick={() => this.stopEntireBeat(synthPart)}>
+            End Recording
+          </Button>
+        </Grid>
         <div align="center">
           &nbsp;
           <Options
