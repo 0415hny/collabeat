@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "6d472ba983f972f0d14ca8e21eacb64c",
+    "revision": "18f531628044a78a8da3dbb8fbc1c08d",
     "url": "/collabeat/index.html"
   },
   {
-    "revision": "636dddedf15de87e8080",
+    "revision": "9540503c818a712f6c14",
     "url": "/collabeat/static/css/2.29c4d543.chunk.css"
   },
   {
-    "revision": "d2f792dfcdc252638402",
+    "revision": "9b59b3430a3a365331da",
     "url": "/collabeat/static/css/main.8601d85c.chunk.css"
   },
   {
-    "revision": "636dddedf15de87e8080",
-    "url": "/collabeat/static/js/2.92f1abe5.chunk.js"
+    "revision": "9540503c818a712f6c14",
+    "url": "/collabeat/static/js/2.d0327a57.chunk.js"
   },
   {
     "revision": "8f0d92b6612dc95b4643d13f624a93e8",
-    "url": "/collabeat/static/js/2.92f1abe5.chunk.js.LICENSE.txt"
+    "url": "/collabeat/static/js/2.d0327a57.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "d2f792dfcdc252638402",
-    "url": "/collabeat/static/js/main.f01075ed.chunk.js"
+    "revision": "9b59b3430a3a365331da",
+    "url": "/collabeat/static/js/main.85843f9e.chunk.js"
   },
   {
     "revision": "48690f9d9dcdb7f8e994",
