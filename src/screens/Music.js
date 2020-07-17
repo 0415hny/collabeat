@@ -37,16 +37,16 @@ const imageNames = ["Piano", "Sax", "Drum", "Trumpet"];
 const imagePaths = [piano, sax, drum, trumpet];
 
 class Music extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
   playSound = () => {
     const synth = new Tone.MembraneSynth().toMaster();
 
-    const loop = new Tone.Loop(function (time) {
-      //triggered every eighth note.
-      synth.triggerAttackRelease("C2", "2n");
-    }, "2n").start(0);
+    // const loop = new Tone.Loop(function (time) {
+    //   //triggered every eighth note.
+    //   synth.triggerAttackRelease("C2", "2n");
+    // }, "2n").start(0);
 
     Tone.Transport.start();
   };
@@ -55,7 +55,7 @@ class Music extends React.Component {
       <Popup
           trigger={
             <Button style={{ backgroundColor: "#2d1a63", color: "white", margin: 10 }}>
-              <img src={shareIcon} style={{ height: 20, marginRight: 10 }} />
+              <img alt="alt" src={shareIcon} style={{ height: 20, marginRight: 10 }} />
               Share Music
             </Button>
           }
@@ -99,8 +99,8 @@ class Music extends React.Component {
       <div className="App">
         <div style={{ padding: 20, display: 'flex' }}>
           <Button onClick={() => this.props.history.push("/collabeat")} style={{ backgroundColor: "#2d1a63", marginRight: 20 }}>
-            <img src={backIcon} style={{ height: 20, paddingRight: 10 }} />
-            <img src={homeIcon} style={{ height: 30 }} />
+            <img alt="alt" src={backIcon} style={{ height: 20, paddingRight: 10 }} />
+            <img alt="alt" src={homeIcon} style={{ height: 30 }} />
           </Button>
         </div>
 
@@ -122,7 +122,7 @@ class Music extends React.Component {
 
         <div>&nbsp;</div>
         <Button style={{ backgroundColor: "#2d1a63", color: "white", margin: 10 }}>
-          <img src={downloadIcon} style={{ height: 20, marginRight: 10 }}/>
+          <img alt="alt" src={downloadIcon} style={{ height: 20, marginRight: 10 }}/>
           Download Music
         </Button>
         {share}
