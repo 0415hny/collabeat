@@ -13,6 +13,12 @@ const recorder = new MediaRecorder(dest.stream);
 const NUMROWS = 7;
 const NUMCOLS = 16;
 
+const buttonStyles = {
+  backgroundColor: "#2d1a63",
+  color: "white",
+  marginRight: 20,
+};
+
 class MusicBoard extends React.Component {
   constructor(props) {
     super(props);
@@ -56,22 +62,20 @@ class MusicBoard extends React.Component {
     console.log(this.state.notes);
   };
 
-  playEntireBeat = (part) => {
-    // create a new sequence with the synth and notes
-    console.log(this.state.notes);
-
-    // Setup the synth to be ready to play on beat 1
+  recordTrack = () => {
+    let part = new Tone.Sequence(
+      function (time, note) {
+        synth.toMaster().triggerAttackRelease(note, "10hz", time);
+      },
+      this.state.notes,
+      "4n"
+    );
     part.start();
-    // Note that if you pass a time into the start method
-    // you can specify when the synth part starts
-    // e.g. .start('8n') will start after 1 eighth note
-    // start the transport which controls the main timeline
     recorder.start();
-
     Tone.Transport.start();
   };
 
-  stopEntireBeat = (part) => {
+  stopRecording = (part) => {
     recorder.stop();
     part.stop();
     Tone.Transport.stop();
@@ -90,14 +94,14 @@ class MusicBoard extends React.Component {
   };
 
   changeOptions = (val, type) => {
-    console.log('in changetempo', val, type);
+    console.log("in changetempo", val, type);
     switch (type) {
-      case 'tempo':
+      case "tempo":
         Tone.Transport.bpm.value = val;
         break;
-      case 'volume':
+      case "volume":
         break;
-      case 'scale':
+      case "scale":
         this.setState({ scale: val });
         break;
       default:
@@ -121,6 +125,21 @@ class MusicBoard extends React.Component {
     });
 
     console.log({ gridC });
+  };
+
+  playTrack = (part) => {
+    Tone.Transport.stop();
+    if (this.state.notes) {
+      part.start();
+      Tone.Transport.start();
+    } else {
+      console.log("no notes to play");
+    }
+  };
+
+  stopTrack = (part) => {
+    part.stop();
+    Tone.Transport.stop();
   };
 
   render() {
@@ -163,8 +182,25 @@ class MusicBoard extends React.Component {
           })}
         </Grid>
         <Grid container justify="center" style={{ margin: 20 }}>
-          <Button style={{ backgroundColor: "#2d1a63", color: "white", marginRight: 20 }} onClick={() => this.playEntireBeat(synthPart)}>Start Recording</Button>
-          <Button style={{ backgroundColor: "#2d1a63", color: "white" }} onClick={() => this.stopEntireBeat(synthPart)}>
+          <Button
+            style={buttonStyles}
+            onClick={() => this.playTrack(synthPart)}
+          >
+            Play
+          </Button>
+          <Button
+            style={buttonStyles}
+            onClick={() => this.stopTrack(synthPart)}
+          >
+            Stop
+          </Button>
+          <Button style={buttonStyles} onClick={() => this.recordTrack()}>
+            Start Recording
+          </Button>
+          <Button
+            style={buttonStyles}
+            onClick={() => this.stopRecording(synthPart)}
+          >
             End Recording
           </Button>
         </Grid>
@@ -178,7 +214,12 @@ class MusicBoard extends React.Component {
         </div>
         <div>
           &nbsp;
-          <audio controls style={audioStyles} src={this.state.src} controlsList="nodownload"></audio>
+          <audio
+            controls
+            style={audioStyles}
+            src={this.state.src}
+            controlsList="nodownload"
+          ></audio>
         </div>
       </div>
     );
