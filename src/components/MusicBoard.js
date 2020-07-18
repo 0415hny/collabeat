@@ -28,15 +28,26 @@ class MusicBoard extends React.Component {
       notes: fillNotes(NUMCOLS),
       gridColours: createGridColourMatrix(NUMROWS, NUMCOLS),
       src: null,
-      instrument: "piano",
-      scale : [ "B2", "A2","G2", "F2","E2","D2","C2" ],
-      loaded: { isLoaded: false }
+      instrument: parseInt(this.props.instrument),
+      scale : this.props.scale,
+      loaded: { isLoaded: false },
+      sampler: LoadMusic(parseInt(this.props.instrument)).toMaster().connect(dest)
     };
     this.handleClick = this.handleClick.bind(this);
+    console.log(this.state.sampler);
 
-    this.sampler = LoadMusic().toMaster();
-    this.sampler.connect(dest);
   }
+
+  componentWillUpdate(prevProps){
+    if(prevProps.instrument !== this.state.instrument){
+        this.setState({          
+            instrument: parseInt(this.props.instrument),
+            scale: this.props.scale,
+            loaded: { isLoaded: false },
+            sampler: LoadMusic(parseInt(this.props.instrument)).toMaster().connect(dest)
+        });
+    }
+}
     
   playSound = (row, col) => {
     const { scale } = this.state;
@@ -48,7 +59,7 @@ class MusicBoard extends React.Component {
       notes: notes,
     });
     console.log(row, scale[row]);
-    this.sampler.triggerAttackRelease(newNote, "8n");
+    this.state.sampler.triggerAttackRelease(newNote, "8n");
 
     console.log(this.state.notes);
   };
@@ -63,7 +74,7 @@ class MusicBoard extends React.Component {
   };
 
   recordTrack = () => {
-    let sampler = this.sampler;
+    let sampler = this.state.sampler;
     let part = new Tone.Sequence(
       function (time, note) {
         sampler.triggerAttackRelease(note, "10hz", time);
@@ -153,7 +164,7 @@ class MusicBoard extends React.Component {
               <Grid item key={i}>
                 <GridButton
                   handleClick={() => this.handleClick(row, col)}
-                  disabled={!isLoaded} 
+                  disabled={!this.state.loaded} 
                   colour={currentCol}
                 />
               </Grid>
@@ -162,7 +173,7 @@ class MusicBoard extends React.Component {
         </Grid>
       );
     };
-    let sampler = this.sampler;
+    let sampler = this.state.sampler;
     let synthPart = new Tone.Sequence(
       function (time, note) {
         sampler.triggerAttackRelease(note, "10hz", time);
@@ -170,7 +181,6 @@ class MusicBoard extends React.Component {
       this.state.notes,
       "4n"
     );
-    const { isLoaded } = this.state.loaded;
     return (
       <div>
         <Grid container spacing={1} wrap="nowrap">

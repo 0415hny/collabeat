@@ -1,29 +1,28 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardMedia from '@material-ui/core/CardMedia';
-
-  const useStyles = makeStyles({
-    root: {
-      maxWidth: 120,
-    },
-  });
-
-  export default function InstrumentCard(props) {
-    const classes = useStyles();
   
-    return (
-        <Card className={classes.root}>
-        <CardActionArea>
-          <CardMedia
-            component="img"
-            alt={props.name}
-            height="120"
-            image={props.path}
-            title={props.name}
-          />
-        </CardActionArea>
-      </Card>
-    );
+  export class InstrumentCard extends React.Component {  
+    constructor(props) {
+      super(props);
+      this.state = {
+        name: this.props.name,
+        path: this.props.path,
+        val: parseInt(this.props.val),
+      };
+    }
+
+    onClick = () => {
+      this.props.onClick(this.state.val);
+    }
+
+    render() {
+      return (
+        <button onClick={() => this.onClick()}>
+          <img src={this.state.path} alt={this.state.name}
+          height="150"
+          width="150"/>
+        </button>
+      );
+    }
   }
+
+  export default InstrumentCard;

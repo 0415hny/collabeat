@@ -40,15 +40,37 @@ import E_cello from "../music/cello/E2.mp3";
 import F_cello from "../music/cello/F2.mp3";
 import G_cello from "../music/cello/G2.mp3";
 
-function LoadMusic() {
-  return new Tone.Sampler(
-    { "B2": B_piano, "A2": A_piano, "G2": G_piano, "F2": F_piano, "E2": E_piano, "D2": D_piano, "C2": C_piano },
+function LoadMusic(instrument) {
+  var instrumentNotes = {};
+  switch(instrument){
+    case 0:
+      instrumentNotes = { "B2": B_piano, "A2": A_piano, "G2": G_piano, "F2": F_piano, "E2": E_piano, "D2": D_piano, "C2": C_piano };
+      break;
+    case 1:
+      instrumentNotes = { "B2": B_guitar, "A2": A_guitar, "G2": G_guitar, "F2": F_guitar, "E2": E_guitar, "D2": D_guitar, "C2": C_guitar };
+      break;
+    case 2:
+      instrumentNotes = { "B2": B_saxophone, "A3": A_saxophone, "G2": G_saxophone, "F2": F_saxophone, "E2": E_saxophone, "D2": D_saxophone, "C3": C_saxophone };
+      break;
+    case 3:
+      instrumentNotes = { "B3": B_harp, "A2": A_harp, "G3": G_harp, "F2": F_harp, "E3": E_harp, "D2": D_harp, "C3": C_harp };
+      break;
+    case 4:
+      instrumentNotes = { "B2": B_cello, "A2": A_cello, "G2": G_cello, "F2": F_cello, "E2": E_cello, "D2": D_cello, "C2": C_cello };
+      break;
+    default:
+      instrumentNotes = { "B2": B_piano, "A2": A_piano, "G2": G_piano, "F2": F_piano, "E2": E_piano, "D2": D_piano, "C2": C_piano };
+      break;
+  }
+  var sampler = new Tone.Sampler(
+    instrumentNotes,
     {
       onload: () => {
         this.setState({loaded: { isLoaded: true }});
       }
     }
   );
+  return sampler;
 }
 
 export default LoadMusic;

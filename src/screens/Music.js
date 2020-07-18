@@ -24,7 +24,14 @@ import {
 } from "react-share";
 
 const imageNames = ["Piano", "Guitar", "Saxophone", "Harp", "Cello"];
-const imagePaths = [piano, sax, guitar, harp, cello];
+const imagePaths = [piano, guitar, sax, harp, cello];
+const scales = [
+  [ "B2", "A2","G2", "F2","E2","D2","C2" ],
+  [ "B2", "A2","G2", "F2","E2","D2","C2" ],
+  [ "B2", "A3","G2", "F2","E2","D2","C3" ],
+  [ "B3", "A2","G3", "F2","E3","D2","C3" ],
+  [ "B2", "A2","G2", "F2","E2","D2","C2" ]
+];
 
 class Music extends React.Component {
   constructor(props) {
@@ -32,6 +39,7 @@ class Music extends React.Component {
     this.state = {
       disabledDownload: true,
       musicSrc: null,
+      instrument: 0
     }
   }
 
@@ -39,6 +47,12 @@ class Music extends React.Component {
     this.setState({
       disabledDownload: false,
       musicSrc: src,
+    });
+  }
+
+  changeInstrument = (val) => {
+    this.setState({
+      instrument: val,
     });
   }
 
@@ -87,17 +101,20 @@ class Music extends React.Component {
         </div>
 
         <Container className="element">
-          <MusicBoard musicComposed={this.musicComposed} />
+          <MusicBoard musicComposed={this.musicComposed} instrument={this.state.instrument} scale={scales[this.state.instrument]}/>
         </Container>
 
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Grid container justify="center" spacing={2}>
-              {[0, 1, 2, 3, 4].map((value) => (
-              <Grid key={value} item>
-                <InstrumentCard name={imageNames[value]} path={imagePaths[value]}/>
-              </Grid>
-              ))}
+              {/* <Carousel> */}
+                {
+                  [0, 1, 2, 3, 4].map( (value) => 
+                  <Grid key={value} item>         
+                    <InstrumentCard name={imageNames[value]} path={imagePaths[value]} val={value} onClick={this.changeInstrument}/>
+                  </Grid> )
+                }
+               {/* </Carousel> */}
             </Grid>
           </Grid>
         </Grid>
