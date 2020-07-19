@@ -3,6 +3,8 @@ import { Grid, Button } from "@material-ui/core";
 import Tone from "tone";
 import GridButton from "./GridButton";
 import Options from "./Options";
+import Pusher from "pusher-js";
+import { v4 } from "uuid";
 import LoadMusic from "./LoadMusic";
 
 const audioStyles = { width: "100%", height: "30px" };
@@ -29,26 +31,79 @@ class MusicBoard extends React.Component {
       gridColours: createGridColourMatrix(NUMROWS, NUMCOLS),
       src: null,
       instrument: parseInt(this.props.instrument),
-      scale : this.props.scale,
+      scale: this.props.scale,
       loaded: { isLoaded: false },
-      sampler: LoadMusic(parseInt(this.props.instrument)).toMaster().connect(dest)
+      sampler: LoadMusic(parseInt(this.props.instrument))
+        .toMaster()
+        .connect(dest),
     };
-    this.handleClick = this.handleClick.bind(this);
-    console.log(this.state.sampler);
 
+    this.pusher = new Pusher("0aeb7e085274c0ecc9c5", {
+      cluster: "us2",
+    });
   }
 
-  componentWillUpdate(prevProps){
-    if(prevProps.instrument !== this.state.instrument){
-        this.setState({          
-            instrument: parseInt(this.props.instrument),
-            scale: this.props.scale,
-            loaded: { isLoaded: false },
-            sampler: LoadMusic(parseInt(this.props.instrument)).toMaster().connect(dest)
-        });
+  userId = v4();
+
+  componentDidMount() {
+    console.log("loaded");
+    const channel = this.pusher.subscribe("makeMusic");
+    channel.bind("pickNotes", (data) => {
+      const { userId, row, col, note } = data;
+      if (userId !== this.userId) {
+        this.updateBoard(row, col, note);
+        console.log("here");
+        console.log({ data });
+      }
+    });
+  }
+
+  componentWillUpdate(prevProps) {
+    if (prevProps.instrument !== this.state.instrument) {
+      this.setState({
+        instrument: parseInt(this.props.instrument),
+        scale: this.props.scale,
+        loaded: { isLoaded: false },
+        sampler: LoadMusic(parseInt(this.props.instrument))
+          .toMaster()
+          .connect(dest),
+      });
     }
-}
-    
+  }
+
+  sendMusicData = async (row, col, newNote) => {
+    const body = {
+      userId: this.userId,
+      row: row,
+      col: col,
+      note: newNote,
+    };
+    // We use the native fetch API to make requests to the server
+    const req = await fetch("/music", {
+      method: "post",
+      body: JSON.stringify(body),
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    const res = await req.json();
+    console.log({ sending: res });
+  };
+
+  updateBoard = (row, col, note) => {
+    let notes = [...this.state.notes];
+    notes[col] = note;
+    this.setState({
+      notes: notes,
+    });
+
+    let gridC = [...this.state.gridColours];
+    gridC[row][col] = "secondary";
+    this.setState({
+      gridColours: gridC,
+    });
+  };
+
   playSound = (row, col) => {
     const { scale } = this.state;
 
@@ -60,6 +115,7 @@ class MusicBoard extends React.Component {
     });
     console.log(row, scale[row]);
     this.state.sampler.triggerAttackRelease(newNote, "8n");
+    this.sendMusicData(row, col, newNote);
 
     console.log(this.state.notes);
   };
@@ -130,7 +186,6 @@ class MusicBoard extends React.Component {
   };
 
   handleClick = (row, col) => {
-    
     let gridC = [...this.state.gridColours];
     let currentColour = gridC[row][col];
     if (currentColour === "default") {
@@ -172,7 +227,7 @@ class MusicBoard extends React.Component {
               <Grid item key={i}>
                 <GridButton
                   handleClick={() => this.handleClick(row, col)}
-                  disabled={!this.state.loaded} 
+                  disabled={!this.state.loaded}
                   colour={currentCol}
                 />
               </Grid>
