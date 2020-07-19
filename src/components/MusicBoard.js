@@ -116,6 +116,11 @@ class MusicBoard extends React.Component {
         sampler.volume.value = val - 50;
         this.setState({ sampler });
         break;
+      case "pitch":
+        Tone.Transport.swing.value = val - 50;
+        // console.log(;
+        // this.setState({ scale: val });
+        break;
       case "scale":
         // this.setState({ scale: val });
         break;
@@ -223,6 +228,7 @@ class MusicBoard extends React.Component {
           <Options
             tempoValue={Tone.Transport.bpm.value}
             volumeValue={50}
+            pitchValue={50}
             handleChange={this.changeOptions}
           />
         </div>

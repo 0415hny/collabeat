@@ -19,6 +19,7 @@ export default function Options(props) {
   const classes = useStyles();
   const [tempoValue, setTempoValue] = React.useState(props.tempoValue);
   const [volumeValue, setVolumeValue] = React.useState(props.volumeValue);
+  const [pitchValue, setPitchValue] = React.useState(props.pitchValue);
   // const [isMajorScale, setIsMajorScale] = React.useState(true);
 
   // const initialScale = new Array(MajorScales.length).fill('white');
@@ -32,6 +33,9 @@ export default function Options(props) {
         break;
       case 'volume':
         setVolumeValue(val);
+        break;
+      case 'pitch':
+        setPitchValue(val);
         break;
       default:
         break;
@@ -49,6 +53,9 @@ export default function Options(props) {
         break;
       case 'volume':
         setVolumeValue(val);
+        break;
+      case 'pitch':
+        setPitchValue(val);
         break;
       default:
         break;
@@ -126,7 +133,33 @@ export default function Options(props) {
       {/* <Typography id="input-slider" gutterBottom>
         Pitch
       </Typography>
-      <Typography id="input-slider" gutterBottom>
+      <Grid container spacing={2} alignItems="center">
+        <Grid item xs>
+          <Slider
+            value={typeof pitchValue === 'number' ? pitchValue : 50}
+            min={0}
+            max={100}
+            onChange={(e, value) => handleSliderChange(e, value, 'pitch')}
+            aria-labelledby="input-slider"
+          />
+        </Grid>
+        <Grid item>
+          <Input
+            className={classes.input}
+            value={pitchValue}
+            margin="dense"
+            onChange={(e) => handleInputChange(e, 'pitch')}
+            inputProps={{
+              step: 1,
+              min: 50,
+              max: 250,
+              type: 'number',
+              'aria-labelledby': 'input-slider',
+            }}
+          />
+        </Grid>
+      </Grid> */}
+      {/* <Typography id="input-slider" gutterBottom>
         Major Scale : 
       </Typography>
       <button disabled={isMajorScale} onClick={() => setIsMajorScale(true)}>Major</button>
