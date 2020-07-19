@@ -5,16 +5,14 @@ import GridButton from "./GridButton";
 import Options from "./Options";
 import Pusher from "pusher-js";
 import { v4 } from "uuid";
+import LoadMusic from "./LoadMusic";
 
-//const synth = new Tone.AMSynth();
-const synth = new Tone.FMSynth();
 const audioStyles = { width: "100%", height: "30px" };
 const audioCtx = Tone.context;
 const dest = audioCtx.createMediaStreamDestination();
 const recorder = new MediaRecorder(dest.stream);
-synth.connect(dest);
 
-const NUMROWS = 8;
+const NUMROWS = 7;
 const NUMCOLS = 16;
 
 const buttonStyles = {
@@ -32,8 +30,12 @@ class MusicBoard extends React.Component {
       notes: fillNotes(NUMCOLS),
       gridColours: createGridColourMatrix(NUMROWS, NUMCOLS),
       src: null,
-      instrument: "piano",
-      scale: ["C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5"],
+      instrument: parseInt(this.props.instrument),
+      scale: this.props.scale,
+      loaded: { isLoaded: false },
+      sampler: LoadMusic(parseInt(this.props.instrument))
+        .toMaster()
+        .connect(dest),
     };
 
     this.pusher = new Pusher("0aeb7e085274c0ecc9c5", {
@@ -54,6 +56,19 @@ class MusicBoard extends React.Component {
         console.log({ data });
       }
     });
+  }
+
+  componentWillUpdate(prevProps) {
+    if (prevProps.instrument !== this.state.instrument) {
+      this.setState({
+        instrument: parseInt(this.props.instrument),
+        scale: this.props.scale,
+        loaded: { isLoaded: false },
+        sampler: LoadMusic(parseInt(this.props.instrument))
+          .toMaster()
+          .connect(dest),
+      });
+    }
   }
 
   sendMusicData = async (row, col, newNote) => {
@@ -99,8 +114,9 @@ class MusicBoard extends React.Component {
       notes: notes,
     });
     console.log(row, scale[row]);
-    synth.toMaster().triggerAttackRelease(newNote, "8n");
+    this.state.sampler.triggerAttackRelease(newNote, "8n");
     this.sendMusicData(row, col, newNote);
+
     console.log(this.state.notes);
   };
 
@@ -114,9 +130,10 @@ class MusicBoard extends React.Component {
   };
 
   recordTrack = () => {
+    let sampler = this.state.sampler;
     let part = new Tone.Sequence(
       function (time, note) {
-        synth.toMaster().triggerAttackRelease(note, "10hz", time);
+        sampler.triggerAttackRelease(note, "10hz", time);
       },
       this.state.notes,
       "4n"
@@ -146,14 +163,22 @@ class MusicBoard extends React.Component {
 
   changeOptions = (val, type) => {
     console.log("in changetempo", val, type);
+    const { sampler } = this.state;
     switch (type) {
       case "tempo":
         Tone.Transport.bpm.value = val;
         break;
       case "volume":
+        sampler.volume.value = val - 50;
+        this.setState({ sampler });
+        break;
+      case "pitch":
+        Tone.Transport.swing.value = val - 50;
+        // console.log(;
+        // this.setState({ scale: val });
         break;
       case "scale":
-        this.setState({ scale: val });
+        // this.setState({ scale: val });
         break;
       default:
         break;
@@ -202,6 +227,7 @@ class MusicBoard extends React.Component {
               <Grid item key={i}>
                 <GridButton
                   handleClick={() => this.handleClick(row, col)}
+                  disabled={!this.state.loaded}
                   colour={currentCol}
                 />
               </Grid>
@@ -210,9 +236,10 @@ class MusicBoard extends React.Component {
         </Grid>
       );
     };
+    let sampler = this.state.sampler;
     let synthPart = new Tone.Sequence(
       function (time, note) {
-        synth.toMaster().triggerAttackRelease(note, "10hz", time);
+        sampler.triggerAttackRelease(note, "10hz", time);
       },
       this.state.notes,
       "4n"
@@ -256,6 +283,7 @@ class MusicBoard extends React.Component {
           <Options
             tempoValue={Tone.Transport.bpm.value}
             volumeValue={50}
+            pitchValue={50}
             handleChange={this.changeOptions}
           />
         </div>
