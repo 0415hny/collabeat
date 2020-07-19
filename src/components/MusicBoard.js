@@ -107,14 +107,17 @@ class MusicBoard extends React.Component {
 
   changeOptions = (val, type) => {
     console.log("in changetempo", val, type);
+    const { sampler } = this.state;
     switch (type) {
       case "tempo":
         Tone.Transport.bpm.value = val;
         break;
       case "volume":
+        sampler.volume.value = val - 50;
+        this.setState({ sampler });
         break;
       case "scale":
-        this.setState({ scale: val });
+        // this.setState({ scale: val });
         break;
       default:
         break;

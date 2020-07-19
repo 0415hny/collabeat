@@ -19,7 +19,7 @@ export default function Options(props) {
   const classes = useStyles();
   const [tempoValue, setTempoValue] = React.useState(props.tempoValue);
   const [volumeValue, setVolumeValue] = React.useState(props.volumeValue);
-  const [isMajorScale, setIsMajorScale] = React.useState(true);
+  // const [isMajorScale, setIsMajorScale] = React.useState(true);
 
   // const initialScale = new Array(MajorScales.length).fill('white');
   // initialScale[0] = 'lightgrey';
