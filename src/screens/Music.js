@@ -4,17 +4,15 @@ import Chat from "../components/Chat";
 import Popup from "reactjs-popup";
 import MusicBoard from "../components/MusicBoard";
 import InstrumentCard from "../components/InstrumentCard";
-import Tone from "tone";
-import drum from "../img/Drum.png";
-import piano from "../img/Piano.png";
-import sax from "../img/Sax.png";
-import trumpet from "../img/Trumpet.png";
+import piano from "../img/piano.jpg";
+import sax from "../img/saxophone.jpg";
+import guitar from "../img/guitar.jpg";
+import harp from "../img/harp.jpg";
+import cello from "../img/cello.jpg";
 import homeIcon from '../img/home.png';
 import backIcon from '../img/back.png';
 import shareIcon from '../img/share.png';
 import downloadIcon from '../img/download.png';
-
-// import './styles.css';
 
 import {
   EmailShareButton,
@@ -25,8 +23,15 @@ import {
   FacebookMessengerShareButton,
 } from "react-share";
 
-const imageNames = ["Piano", "Sax", "Drum", "Trumpet"];
-const imagePaths = [piano, sax, drum, trumpet];
+const imageNames = ["Piano", "Guitar", "Saxophone", "Harp", "Cello"];
+const imagePaths = [piano, guitar, sax, harp, cello];
+const scales = [
+  [ "B2", "A2","G2", "F2","E2","D2","C2" ],
+  [ "B2", "A2","G2", "F2","E2","D2","C2" ],
+  [ "B2", "A3","G2", "F2","E2","D2","C3" ],
+  [ "B3", "A2","G3", "F2","E3","D2","C3" ],
+  [ "B2", "A2","G2", "F2","E2","D2","C2" ]
+];
 
 class Music extends React.Component {
   constructor(props) {
@@ -34,22 +39,20 @@ class Music extends React.Component {
     this.state = {
       disabledDownload: true,
       musicSrc: null,
+      instrument: 0
     }
   }
-  // playSound = () => {
-  //   const synth = new Tone.MembraneSynth().toMaster();
 
-  //   const loop = new Tone.Loop(function (time) {
-  //     //triggered every eighth note.
-  //     synth.triggerAttackRelease("C2", "2n");
-  //   }, "2n").start(0);
-
-  //   Tone.Transport.start();
-  // };
   musicComposed = (src) => {
     this.setState({
       disabledDownload: false,
       musicSrc: src,
+    });
+  }
+
+  changeInstrument = (val) => {
+    this.setState({
+      instrument: val,
     });
   }
 
@@ -68,7 +71,7 @@ class Music extends React.Component {
         >
           {(close) => (
             <div className="modal">
-              <a className="close" onClick={close}>
+              <a className="close" onClick={close} href="/">
                 &times;
               </a>
               <div className="header">Share Music to Social Media</div>
@@ -98,17 +101,20 @@ class Music extends React.Component {
         </div>
 
         <Container className="element">
-          <MusicBoard musicComposed={this.musicComposed} />
+          <MusicBoard musicComposed={this.musicComposed} instrument={this.state.instrument} scale={scales[this.state.instrument]}/>
         </Container>
 
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Grid container justify="center" spacing={2}>
-              {[0, 1, 2, 3].map((value) => (
-              <Grid key={value} item>
-                <InstrumentCard name={imageNames[value]} path={imagePaths[value]}/>
-              </Grid>
-              ))}
+              {/* <Carousel> */}
+                {
+                  [0, 1, 2, 3, 4].map( (value) => 
+                  <Grid key={value} item>         
+                    <InstrumentCard name={imageNames[value]} path={imagePaths[value]} val={value} onClick={this.changeInstrument}/>
+                  </Grid> )
+                }
+               {/* </Carousel> */}
             </Grid>
           </Grid>
         </Grid>

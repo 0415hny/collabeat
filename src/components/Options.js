@@ -15,17 +15,15 @@ const useStyles = makeStyles({
   },
 });
 
-// TODO: write a function to play the scales
-
 export default function Options(props) {
   const classes = useStyles();
   const [tempoValue, setTempoValue] = React.useState(props.tempoValue);
   const [volumeValue, setVolumeValue] = React.useState(props.volumeValue);
   const [isMajorScale, setIsMajorScale] = React.useState(true);
 
-  const initialScale = new Array(MajorScales.length).fill('white');
-  initialScale[0] = 'lightgrey';
-  const [scaleButtonColor, setScaleButtonColor] = React.useState(initialScale);
+  // const initialScale = new Array(MajorScales.length).fill('white');
+  // initialScale[0] = 'lightgrey';
+  // const [scaleButtonColor, setScaleButtonColor] = React.useState(initialScale);
 
   const handleSliderChange = (e, val, type) => {
     switch (type) {
@@ -58,12 +56,12 @@ export default function Options(props) {
     props.handleChange(val, type);
   };
 
-  const handleScaleChange = (notes, i) => {
-    props.handleChange(notes, "scale")
-    const newArr = new Array(MajorScales.length).fill('white');
-    newArr[i] = 'lightGrey';
-    setScaleButtonColor(newArr);
-  }
+  // const handleScaleChange = (notes, i) => {
+  //   props.handleChange(notes, "scale")
+  //   const newArr = new Array(majorScales.length).fill('white');
+  //   newArr[i] = 'lightGrey';
+  //   setScaleButtonColor(newArr);
+  // }
 
   return (
     <div className={classes.root}>
@@ -127,7 +125,7 @@ export default function Options(props) {
       </Grid>
       {/* <Typography id="input-slider" gutterBottom>
         Pitch
-      </Typography> */}
+      </Typography>
       <Typography id="input-slider" gutterBottom>
         Major Scale : 
       </Typography>
@@ -151,7 +149,7 @@ export default function Options(props) {
             );
           })
         )}
-      </Grid>
+      </Grid> */}
     </div>
   );
 }

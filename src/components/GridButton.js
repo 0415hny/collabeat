@@ -6,6 +6,7 @@ export class GridButton extends React.Component {
     super(props);
     this.state = {
       color: this.props.colour,
+      disabled: this.props.disabled
     };
   }
 
@@ -17,6 +18,7 @@ export class GridButton extends React.Component {
     return (
       <Button
         variant="contained"
+        disabled={this.state.disabled}
         color={this.state.color}
         onClick={this.handleClick}
         style={{

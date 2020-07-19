@@ -3,17 +3,21 @@ import { Grid, Button } from "@material-ui/core";
 import Tone from "tone";
 import GridButton from "./GridButton";
 import Options from "./Options";
+import LoadMusic from "./LoadMusic";
 
-//const synth = new Tone.AMSynth();
-const synth = new Tone.FMSynth();
 const audioStyles = { width: "100%", height: "30px" };
 const audioCtx = Tone.context;
 const dest = audioCtx.createMediaStreamDestination();
 const recorder = new MediaRecorder(dest.stream);
-synth.connect(dest);
 
-const NUMROWS = 8;
+const NUMROWS = 7;
 const NUMCOLS = 16;
+
+const buttonStyles = {
+  backgroundColor: "#2d1a63",
+  color: "white",
+  marginRight: 20,
+};
 
 class MusicBoard extends React.Component {
   constructor(props) {
@@ -24,10 +28,27 @@ class MusicBoard extends React.Component {
       notes: fillNotes(NUMCOLS),
       gridColours: createGridColourMatrix(NUMROWS, NUMCOLS),
       src: null,
-      instrument: "piano",
-      scale : [ "C4", "D4","E4", "F4","G4","A4","B4","C5" ]
+      instrument: parseInt(this.props.instrument),
+      scale : this.props.scale,
+      loaded: { isLoaded: false },
+      sampler: LoadMusic(parseInt(this.props.instrument)).toMaster().connect(dest)
     };
+    this.handleClick = this.handleClick.bind(this);
+    console.log(this.state.sampler);
+
   }
+
+  componentWillUpdate(prevProps){
+    if(prevProps.instrument !== this.state.instrument){
+        this.setState({          
+            instrument: parseInt(this.props.instrument),
+            scale: this.props.scale,
+            loaded: { isLoaded: false },
+            sampler: LoadMusic(parseInt(this.props.instrument)).toMaster().connect(dest)
+        });
+    }
+}
+    
   playSound = (row, col) => {
     const { scale } = this.state;
 
@@ -38,7 +59,7 @@ class MusicBoard extends React.Component {
       notes: notes,
     });
     console.log(row, scale[row]);
-    synth.toMaster().triggerAttackRelease(newNote, "8n");
+    this.state.sampler.triggerAttackRelease(newNote, "8n");
 
     console.log(this.state.notes);
   };
@@ -52,22 +73,21 @@ class MusicBoard extends React.Component {
     console.log(this.state.notes);
   };
 
-  playEntireBeat = (part) => {
-    // create a new sequence with the synth and notes
-    console.log(this.state.notes);
-
-    // Setup the synth to be ready to play on beat 1
+  recordTrack = () => {
+    let sampler = this.state.sampler;
+    let part = new Tone.Sequence(
+      function (time, note) {
+        sampler.triggerAttackRelease(note, "10hz", time);
+      },
+      this.state.notes,
+      "4n"
+    );
     part.start();
-    // Note that if you pass a time into the start method
-    // you can specify when the synth part starts
-    // e.g. .start('8n') will start after 1 eighth note
-    // start the transport which controls the main timeline
     recorder.start();
-
     Tone.Transport.start();
   };
 
-  stopEntireBeat = (part) => {
+  stopRecording = (part) => {
     recorder.stop();
     part.stop();
     Tone.Transport.stop();
@@ -86,14 +106,14 @@ class MusicBoard extends React.Component {
   };
 
   changeOptions = (val, type) => {
-    console.log('in changetempo', val, type);
+    console.log("in changetempo", val, type);
     switch (type) {
-      case 'tempo':
+      case "tempo":
         Tone.Transport.bpm.value = val;
         break;
-      case 'volume':
+      case "volume":
         break;
-      case 'scale':
+      case "scale":
         this.setState({ scale: val });
         break;
       default:
@@ -102,6 +122,7 @@ class MusicBoard extends React.Component {
   };
 
   handleClick = (row, col) => {
+    
     let gridC = [...this.state.gridColours];
     let currentColour = gridC[row][col];
     if (currentColour === "default") {
@@ -118,6 +139,21 @@ class MusicBoard extends React.Component {
     console.log({ gridC });
   };
 
+  playTrack = (part) => {
+    Tone.Transport.stop();
+    if (this.state.notes) {
+      part.start();
+      Tone.Transport.start();
+    } else {
+      console.log("no notes to play");
+    }
+  };
+
+  stopTrack = (part) => {
+    part.stop();
+    Tone.Transport.stop();
+  };
+
   render() {
     const FormRow = ({ col }) => {
       return (
@@ -128,6 +164,7 @@ class MusicBoard extends React.Component {
               <Grid item key={i}>
                 <GridButton
                   handleClick={() => this.handleClick(row, col)}
+                  disabled={!this.state.loaded} 
                   colour={currentCol}
                 />
               </Grid>
@@ -136,9 +173,10 @@ class MusicBoard extends React.Component {
         </Grid>
       );
     };
+    let sampler = this.state.sampler;
     let synthPart = new Tone.Sequence(
       function (time, note) {
-        synth.toMaster().triggerAttackRelease(note, "10hz", time);
+        sampler.triggerAttackRelease(note, "10hz", time);
       },
       this.state.notes,
       "4n"
@@ -155,8 +193,25 @@ class MusicBoard extends React.Component {
           })}
         </Grid>
         <Grid container justify="center" style={{ margin: 20 }}>
-          <Button style={{ backgroundColor: "#2d1a63", color: "white", marginRight: 20 }} onClick={() => this.playEntireBeat(synthPart)}>Start Recording</Button>
-          <Button style={{ backgroundColor: "#2d1a63", color: "white" }} onClick={() => this.stopEntireBeat(synthPart)}>
+          <Button
+            style={buttonStyles}
+            onClick={() => this.playTrack(synthPart)}
+          >
+            Play
+          </Button>
+          <Button
+            style={buttonStyles}
+            onClick={() => this.stopTrack(synthPart)}
+          >
+            Stop
+          </Button>
+          <Button style={buttonStyles} onClick={() => this.recordTrack()}>
+            Start Recording
+          </Button>
+          <Button
+            style={buttonStyles}
+            onClick={() => this.stopRecording(synthPart)}
+          >
             End Recording
           </Button>
         </Grid>
@@ -170,7 +225,12 @@ class MusicBoard extends React.Component {
         </div>
         <div>
           &nbsp;
-          <audio controls style={audioStyles} src={this.state.src} controlsList="nodownload"></audio>
+          <audio
+            controls
+            style={audioStyles}
+            src={this.state.src}
+            controlsList="nodownload"
+          ></audio>
         </div>
       </div>
     );
