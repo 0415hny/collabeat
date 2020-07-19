@@ -58,7 +58,7 @@ class MusicBoard extends React.Component {
     });
   }
 
-  componentWillUpdate(prevProps) {
+  componentWillReceiveProps(prevProps) {
     if (prevProps.instrument !== this.state.instrument) {
       this.setState({
         instrument: parseInt(this.props.instrument),
