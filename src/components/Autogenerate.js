@@ -16,7 +16,6 @@ export class Autogenerate extends React.Component {
       selectedGenre: currentGenre,
     });
     this.props.onGenreChange(currentGenre);
-    console.log(currentGenre);
   };
 
   render() {
