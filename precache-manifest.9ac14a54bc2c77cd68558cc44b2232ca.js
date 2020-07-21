@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "a7a29194fbdb0fbbd69eb457f6810743",
+    "revision": "2f2ef30a5001a5f2a02a11ad3c1c885d",
     "url": "/collabeat/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/collabeat/static/css/2.29c4d543.chunk.css"
   },
   {
-    "revision": "3dfea532bf4ccce56a35",
+    "revision": "3ccc70ffb0f854b66b9b",
     "url": "/collabeat/static/css/main.8601d85c.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/collabeat/static/js/2.013e55c1.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "3dfea532bf4ccce56a35",
-    "url": "/collabeat/static/js/main.fe420e85.chunk.js"
+    "revision": "3ccc70ffb0f854b66b9b",
+    "url": "/collabeat/static/js/main.34c125d4.chunk.js"
   },
   {
     "revision": "48690f9d9dcdb7f8e994",
