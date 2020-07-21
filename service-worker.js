@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/collabeat/precache-manifest.a3ee277b59a0d8a57b1514b330859685.js"
+  "/collabeat/precache-manifest.16a1c4b3a390f0bebac02c3019deaef8.js"
 );
 
 self.addEventListener('message', (event) => {
