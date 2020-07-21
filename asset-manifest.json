@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/collabeat/static/css/main.8601d85c.chunk.css",
-    "main.js": "/collabeat/static/js/main.4f4a3400.chunk.js",
-    "main.js.map": "/collabeat/static/js/main.4f4a3400.chunk.js.map",
+    "main.css": "/collabeat/static/css/main.e4031b7d.chunk.css",
+    "main.js": "/collabeat/static/js/main.a2946469.chunk.js",
+    "main.js.map": "/collabeat/static/js/main.a2946469.chunk.js.map",
     "runtime-main.js": "/collabeat/static/js/runtime-main.69d36ca1.js",
     "runtime-main.js.map": "/collabeat/static/js/runtime-main.69d36ca1.js.map",
     "static/css/2.29c4d543.chunk.css": "/collabeat/static/css/2.29c4d543.chunk.css",
-    "static/js/2.013e55c1.chunk.js": "/collabeat/static/js/2.013e55c1.chunk.js",
-    "static/js/2.013e55c1.chunk.js.map": "/collabeat/static/js/2.013e55c1.chunk.js.map",
+    "static/js/2.b9727475.chunk.js": "/collabeat/static/js/2.b9727475.chunk.js",
+    "static/js/2.b9727475.chunk.js.map": "/collabeat/static/js/2.b9727475.chunk.js.map",
     "index.html": "/collabeat/index.html",
-    "precache-manifest.16a1c4b3a390f0bebac02c3019deaef8.js": "/collabeat/precache-manifest.16a1c4b3a390f0bebac02c3019deaef8.js",
+    "precache-manifest.7f528880ed5f6fbfe39190bb399f8dbe.js": "/collabeat/precache-manifest.7f528880ed5f6fbfe39190bb399f8dbe.js",
     "service-worker.js": "/collabeat/service-worker.js",
     "static/css/2.29c4d543.chunk.css.map": "/collabeat/static/css/2.29c4d543.chunk.css.map",
-    "static/css/main.8601d85c.chunk.css.map": "/collabeat/static/css/main.8601d85c.chunk.css.map",
-    "static/js/2.013e55c1.chunk.js.LICENSE.txt": "/collabeat/static/js/2.013e55c1.chunk.js.LICENSE.txt",
+    "static/css/main.e4031b7d.chunk.css.map": "/collabeat/static/css/main.e4031b7d.chunk.css.map",
+    "static/js/2.b9727475.chunk.js.LICENSE.txt": "/collabeat/static/js/2.b9727475.chunk.js.LICENSE.txt",
     "static/media/A2.mp3": "/collabeat/static/media/A2.7798a28e.mp3",
     "static/media/A3.mp3": "/collabeat/static/media/A3.15d4c761.mp3",
     "static/media/B2.mp3": "/collabeat/static/media/B2.e00dac80.mp3",
@@ -27,13 +27,20 @@
     "static/media/G2.mp3": "/collabeat/static/media/G2.e8ffda9d.mp3",
     "static/media/G3.mp3": "/collabeat/static/media/G3.38b96c8d.mp3",
     "static/media/cello.jpg": "/collabeat/static/media/cello.680c8862.jpg",
-    "static/media/harp.jpg": "/collabeat/static/media/harp.4d86aaf6.jpg"
+    "static/media/clap.wav": "/collabeat/static/media/clap.7f1a5a0a.wav",
+    "static/media/closeHiHat.wav": "/collabeat/static/media/closeHiHat.b290d897.wav",
+    "static/media/harp.jpg": "/collabeat/static/media/harp.4d86aaf6.jpg",
+    "static/media/kick.wav": "/collabeat/static/media/kick.3b70a163.wav",
+    "static/media/openHiHat.wav": "/collabeat/static/media/openHiHat.73784985.wav",
+    "static/media/ride-new.wav": "/collabeat/static/media/ride-new.0e06dcd9.wav",
+    "static/media/rim.wav": "/collabeat/static/media/rim.90b7de2b.wav",
+    "static/media/snare.wav": "/collabeat/static/media/snare.82db2495.wav"
   },
   "entrypoints": [
     "static/js/runtime-main.69d36ca1.js",
     "static/css/2.29c4d543.chunk.css",
-    "static/js/2.013e55c1.chunk.js",
-    "static/css/main.8601d85c.chunk.css",
-    "static/js/main.4f4a3400.chunk.js"
+    "static/js/2.b9727475.chunk.js",
+    "static/css/main.e4031b7d.chunk.css",
+    "static/js/main.a2946469.chunk.js"
   ]
 }

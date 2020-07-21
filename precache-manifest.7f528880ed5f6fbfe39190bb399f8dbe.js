@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "cb6919431bba66448744e512e4338119",
+    "revision": "8570683a880e36f8b8f9b1fb28a84ec9",
     "url": "/collabeat/index.html"
   },
   {
-    "revision": "3d433d28152b3a4ca6ba",
+    "revision": "9c4cd2e5192953b5f279",
     "url": "/collabeat/static/css/2.29c4d543.chunk.css"
   },
   {
-    "revision": "5bf3aa02904fa33a179d",
-    "url": "/collabeat/static/css/main.8601d85c.chunk.css"
+    "revision": "4f532b9d694b072c1bdb",
+    "url": "/collabeat/static/css/main.e4031b7d.chunk.css"
   },
   {
-    "revision": "3d433d28152b3a4ca6ba",
-    "url": "/collabeat/static/js/2.013e55c1.chunk.js"
+    "revision": "9c4cd2e5192953b5f279",
+    "url": "/collabeat/static/js/2.b9727475.chunk.js"
   },
   {
-    "revision": "9acbe4522693589baa0170db7e919bdb",
-    "url": "/collabeat/static/js/2.013e55c1.chunk.js.LICENSE.txt"
+    "revision": "a6879f5c9457306a8827334619b46c5d",
+    "url": "/collabeat/static/js/2.b9727475.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "5bf3aa02904fa33a179d",
-    "url": "/collabeat/static/js/main.4f4a3400.chunk.js"
+    "revision": "4f532b9d694b072c1bdb",
+    "url": "/collabeat/static/js/main.a2946469.chunk.js"
   },
   {
     "revision": "48690f9d9dcdb7f8e994",
@@ -172,7 +172,35 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/collabeat/static/media/cello.680c8862.jpg"
   },
   {
+    "revision": "7f1a5a0a3f6683533f55ae5f287fe11a",
+    "url": "/collabeat/static/media/clap.7f1a5a0a.wav"
+  },
+  {
+    "revision": "b290d8976485af05286211cb5ab1ab2d",
+    "url": "/collabeat/static/media/closeHiHat.b290d897.wav"
+  },
+  {
     "revision": "4d86aaf64d7a566368c179bd996e708c",
     "url": "/collabeat/static/media/harp.4d86aaf6.jpg"
+  },
+  {
+    "revision": "3b70a1635e68704894be65cd71d821a9",
+    "url": "/collabeat/static/media/kick.3b70a163.wav"
+  },
+  {
+    "revision": "73784985f95fecadf7f2941415862e17",
+    "url": "/collabeat/static/media/openHiHat.73784985.wav"
+  },
+  {
+    "revision": "0e06dcd9c5f1d015d019f176944761ce",
+    "url": "/collabeat/static/media/ride-new.0e06dcd9.wav"
+  },
+  {
+    "revision": "90b7de2b772ce77068be28712a289dad",
+    "url": "/collabeat/static/media/rim.90b7de2b.wav"
+  },
+  {
+    "revision": "82db24957dd191c6d3127b0949683809",
+    "url": "/collabeat/static/media/snare.82db2495.wav"
   }
 ]);
