@@ -79,13 +79,14 @@ class MusicBoard extends React.Component {
       note: newNote,
     };
     // We use the native fetch API to make requests to the server
-    const req = await fetch("/music", {
+    const req = await fetch("https://collabeat-server.herokuapp.com/music", {
       method: "post",
       body: JSON.stringify(body),
       headers: {
         "content-type": "application/json",
       },
     });
+    console.log(req);
     const res = await req.json();
     console.log({ sending: res });
   };
